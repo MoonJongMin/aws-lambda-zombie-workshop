@@ -15,9 +15,9 @@
 ### 실습 소개
 각 실습 코스는 독립적으로 구성되어 있기 때문에 골라서 하거나, 전부 다 하실 수도 있습니다. 
 
-* **Lab 1: 생존자 채팅 기능**  
+* **Lab 1: 메세지 입력자 표시**  
 
-   실습은 이미 UI 및 백엔드가 구성되어 있고 어떻게 API Gateway를 실습하고 RESTful 엔드 포인트를 제공하는지에 초점을 맞추고 있습니다. 전 세계 글로벌 감염 상태에서 생존자 간의 채팅 기능을 기본적으로 제공합니다. 
+   실습은 이미 UI 및 백엔드가 구성되어 있고 어떻게 API Gateway를 실습하고 RESTful 엔드 포인트를 제공하는지에 초점을 맞추고 있습니다. 채팅 방에서 현재 어느 생존자가 타이핑을 하고 있는지를 생존자 채팅 application에 표시하는 기능을 구현합니다. 
 
 * **Lab 2: Twilio 기반 SMS 연동**  
 
@@ -67,7 +67,7 @@
 
 4\. "Options" 페이지에서 기본 값을 그대로 두고 **Next**를 클릭합니다.
 
-5\. "Review" 페이지에서, 선택 사항을 확인하고 맨 아래까지 스크롤을 내린 후 **Create**를 눌러 스택 및 클라우드 실습 자원을 시작합니다.
+5\. "Review" 페이지에서, 선택 사항을 확인하고 맨 아래까지 스크롤을 내린 후 **I acknowledge that AWS CloudFormation might create IAM resources.** 란에 체크하고 **Create**를 눌러 스택 및 클라우드 실습 자원을 시작합니다.
 
 6\. 전체 스택이 만들어지는데는 약 3분 정도의 시간이 소요되며, "Events" 탭에서 진행 사항을 보실 수 있고, 완료되면 상태 메시지가 "CREATE_COMPLETE"으로 변경됩니다.
 
@@ -95,7 +95,7 @@ CloudFromation 만들 때, 이미 Cognito 통합 인증 서비스를 생성하�
 
 Cognito User Pools은 모든 리전에서 제공되지 않습니다. 만약  **us-east-1 (Virginia), us-west-2 (Oregon), eu-west-1 (Ireland), eu-central-1 (Frankfurt), ap-northeast-1 (Tokyo), ap-northeast-2 (Seoul), ** 이외에서 CloudFormation을 실행하셨다면, 오른쪽 상단의 리전을 **us-east-1 (Virginia)**로 변경 후, Cognito 서비스로 들어가시기 바랍니다. 애플리케이션은 여러분이 만든 리전에 존재하고 있지만, 사용자 인증은 us-east-1의 Cognito 서비스를 이용하게 됩니다. 만약 위에 목록에 해당하는 리전에서 CloudFormation 스택을 실행하셨다면, 그 리전의 Cognito 서비스에서 진행하시면 됩니다. 
 
-콘솔에서 **Manage your User Pools**를 선택합니다. 이제 채팅 앱에서 사용할 사용자 디렉토리를 만들도록 하겠습니다. 
+콘솔에서 **Manage User Pools**를 선택합니다. 이제 채팅 앱에서 사용할 사용자 디렉토리를 만들도록 하겠습니다. 
 
 2\. 오른쪽 상단의 **Create a User Pool** 이라는 푸른 버튼을 클릭하여, 새 사용자 디렉토리를 만듭니다.
 
@@ -105,7 +105,7 @@ Cognito User Pools은 모든 리전에서 제공되지 않습니다. 만약  **u
 
 * Cognito User Pools에서는 여러분의 애플리케이션에서 이용할 사용자 정보 속성을 만들 수 있습니다. 이는 사용자가 가입을 할 때 입력을 해야 하는 정보이며, 사용자가 Cognito로 인증할 때, 애플리케이션이 세션 데이터에서 이를 활용 가능합니다.
 
-5\. "Add custom attribute" 링크를 클릭합니다. 모든 기본 값은 그대로 두고, "Name"에 **slackuser** 라고 정확히 넣습니다. 추가 속성은  **slackteamdomain** 및 **camp** 입니다.
+5\. 화면 제일 아래의 "Add custom attribute" 링크를 클릭합니다. 모든 기본 값은 그대로 두고, "Name"에 **slackuser** 라고 정확히 넣습니다. "Add another attribute" 링크를 누른 후 **slackteamdomain** 및 **camp** 도 추가합니다.
 
 * User Pool 내에서 맞춤형 속성을 정의할 수 있습니다. 생존자 채팅앱에는 위의 세 가지 속성을 추가로 사용합니다. 
 
