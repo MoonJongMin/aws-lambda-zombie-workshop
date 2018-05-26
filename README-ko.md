@@ -5,7 +5,7 @@
 
 본 워크샵에서는 전 세계적인 좀비 확산 사태가 발생할 경우, AWS Lambda 생존자 구출 특공대의 일원으로서 생존자간 소통을 위한 시스템을 구축하는 업무를 완료하게 됩니다.
 
-기본 생존자 채팅앱은 [AWS CloudFormation](https://aws.amazon.com/cloudformation/) 템플릿으로 바로 구성할 수 있으며, 각 실습 코스를 완료하게 되면 채팅 앱의 다양한 기능을 확장할 수 있습니다. 
+기본 생존자 채팅앱은 [AWS CloudFormation](https://aws.amazon.com/cloudformation/) 템플릿으로 바로 구성할 수 있으며, 각 실습 코스를 완료하게 되면 채팅 앱의 다양한 기능을 확장할 수 있습니다.
 
 본 실습을 진행하기 전에 [Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html) 설정을 진행해야 합니다. 본 가이드를 통해 진행하시면 완료하실 수 있습니다.
 
@@ -13,11 +13,11 @@
 본 실습을 진행하려면, Amazon Cognito User Pools를 사용하여 서버리스 생존자 채팅 애플리케이션에 사용자 인증을 통합할 수 있습니다.
 
 ### 실습 소개
-각 실습 코스는 독립적으로 구성되어 있기 때문에 골라서 하거나, 전부 다 하실 수도 있습니다. 
+각 실습 코스는 독립적으로 구성되어 있기 때문에 골라서 하거나, 전부 다 하실 수도 있습니다.
 
 * **Lab 1: 메세지 입력자 표시**  
 
-   실습은 이미 UI 및 백엔드가 구성되어 있고 어떻게 API Gateway를 실습하고 RESTful 엔드 포인트를 제공하는지에 초점을 맞추고 있습니다. 채팅 방에서 현재 어느 생존자가 타이핑을 하고 있는지를 생존자 채팅 application에 표시하는 기능을 구현합니다. 
+   실습은 이미 UI 및 백엔드가 구성되어 있고 어떻게 API Gateway를 실습하고 RESTful 엔드 포인트를 제공하는지에 초점을 맞추고 있습니다. 채팅 방에서 현재 어느 생존자가 타이핑을 하고 있는지를 생존자 채팅 application에 표시하는 기능을 구현합니다.
 
 * **Lab 2: Twilio 기반 SMS 연동**  
 
@@ -25,7 +25,7 @@
 
 * **Lab 3: Elasticsearch 서비스 기반 채팅 메시지 검색**  
 
-    본 실습은 Elasticsearch 클러스터를 이용하여 채팅 메시지를 DynamoDB 테이블에 저장하고, 스트리밍 데이터를 통해 검색 인덱싱을 합니다. 
+    본 실습은 Elasticsearch 클러스터를 이용하여 채팅 메시지를 DynamoDB 테이블에 저장하고, 스트리밍 데이터를 통해 검색 인덱싱을 합니다.
 
 * **Lab 4: Slack 연동**  
 
@@ -93,9 +93,9 @@ CloudFromation 만들 때, 이미 Cognito 통합 인증 서비스를 생성하�
 
 ![Navigate to the Cognito service](/Images/Cognito-Step1.png)
 
-Cognito User Pools은 모든 리전에서 제공되지 않습니다. 만약  **us-east-1 (Virginia), us-west-2 (Oregon), eu-west-1 (Ireland), eu-central-1 (Frankfurt), ap-northeast-1 (Tokyo), ap-northeast-2 (Seoul), ** 이외에서 CloudFormation을 실행하셨다면, 오른쪽 상단의 리전을 **us-east-1 (Virginia)**로 변경 후, Cognito 서비스로 들어가시기 바랍니다. 애플리케이션은 여러분이 만든 리전에 존재하고 있지만, 사용자 인증은 us-east-1의 Cognito 서비스를 이용하게 됩니다. 만약 위에 목록에 해당하는 리전에서 CloudFormation 스택을 실행하셨다면, 그 리전의 Cognito 서비스에서 진행하시면 됩니다. 
+Cognito User Pools은 모든 리전에서 제공되지 않습니다. 만약  **us-east-1 (Virginia), us-west-2 (Oregon), eu-west-1 (Ireland), eu-central-1 (Frankfurt), ap-northeast-1 (Tokyo), ap-northeast-2 (Seoul), ** 이외에서 CloudFormation을 실행하셨다면, 오른쪽 상단의 리전을 **us-east-1 (Virginia)**로 변경 후, Cognito 서비스로 들어가시기 바랍니다. 애플리케이션은 여러분이 만든 리전에 존재하고 있지만, 사용자 인증은 us-east-1의 Cognito 서비스를 이용하게 됩니다. 만약 위에 목록에 해당하는 리전에서 CloudFormation 스택을 실행하셨다면, 그 리전의 Cognito 서비스에서 진행하시면 됩니다.
 
-콘솔에서 **Manage User Pools**를 선택합니다. 이제 채팅 앱에서 사용할 사용자 디렉토리를 만들도록 하겠습니다. 
+콘솔에서 **Manage User Pools**를 선택합니다. 이제 채팅 앱에서 사용할 사용자 디렉토리를 만들도록 하겠습니다.
 
 2\. 오른쪽 상단의 **Create a User Pool** 이라는 푸른 버튼을 클릭하여, 새 사용자 디렉토리를 만듭니다.
 
@@ -107,7 +107,7 @@ Cognito User Pools은 모든 리전에서 제공되지 않습니다. 만약  **u
 
 5\. 화면 제일 아래의 "Add custom attribute" 링크를 클릭합니다. 모든 기본 값은 그대로 두고, "Name"에 **slackuser** 라고 정확히 넣습니다. "Add another attribute" 링크를 누른 후 **slackteamdomain** 및 **camp** 도 추가합니다.
 
-* User Pool 내에서 맞춤형 속성을 정의할 수 있습니다. 생존자 채팅앱에는 위의 세 가지 속성을 추가로 사용합니다. 
+* User Pool 내에서 맞춤형 속성을 정의할 수 있습니다. 생존자 채팅앱에는 위의 세 가지 속성을 추가로 사용합니다.
 
 속성 설정은 아래 이미지 처럼 하시면 됩니다.
 
@@ -117,19 +117,19 @@ Cognito User Pools은 모든 리전에서 제공되지 않습니다. 만약  **u
 
 6\. Policies 페이지에서 암호 정책 설정은 기본 값으로 두고 그냥 **Next step**을 클릭합니다.
 
-7\. Verifications 페이지는 기본 값으로 두고 그냥 **Next step**을 클릭합니다. Message Customizations 페이지에서 **Do you want to customize your email verification message?** 이라는 제목의 영역을 수정할 것입니다.
+7\. MFA and Verifications 페이지는 기본 값으로 두고 그냥 **Next step**을 클릭합니다. Message Customizations 페이지에서 **Do you want to customize your email verification message?** 이라는 제목의 영역을 수정할 것입니다.
 
 Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니다. 메일 본문 부분은 수정하지 않고 여러분이 원하는 부분이 있으면 입력합니다. 이제 Cognito가 이메일을 보내게 되며, 실제 정식 서비스 환경에서는 여러분의 이메일 서버를 통해 보낼 수도 있습니다.
 
  **Next step**을 클릭합니다.
 
-* 본 애플리케이션에서 멀티 팩터 인증(MFA)은 사용하지는 않습니다. 다만, 회원 가입 시 이메일 주소를 통해 인증을 하게 됩니다. "Do you want to require verification of emails or phone numbers?"을 체크하게 되면, 사용자가 가입을 하면 확인 메일을 보내시, 링크를 클릭해야만 가입이 완료됩니다.  
+* 본 애플리케이션에서 멀티 팩터 인증(MFA)은 사용하지는 않습니다. 다만, 회원 가입 시 이메일 주소를 통해 인증을 하게 됩니다. "Do you want to require verification of emails or phone numbers?"을 체크하게 되면, 사용자가 가입을 하면 확인 메일 또는 문자를 보내서, 링크를 클릭해야만 가입이 완료됩니다.  
 
-8\. Devices 페이지에서는 "No" 라는 기본 값을 그대로 둡니다. 사용자 기기에 저장하도록 설정하지 않는 것입니다.  
+8\. Tags 페이지는 **Next step**을 클릭해서 넘어가고, Devices 페이지에서는 "No" 라는 기본 값을 그대로 둡니다. User pool이 사용자 기기를 기억하도록 설정하지 않는 것입니다.
 
-9\. Apps 페이지에서는 **Add an app**을 선택합니다. **App Name** 텍스트 박스에서는 "Zombie Survivor Chat App"이라고 적고, **client secret 체크박스를 선택하지 않습니다.**. 그리고, **Set attribute read and write permissions**을 선택합니다. 앱에서 맞춤형 속성 값에 "writable" 접근 권한을 주어야 합니다. **Writable Attributes** 체크 박스에 **custom:slackuser, custom:slackteamdomain, custom:camp** 체크를 하고, 나머지는 그대로 둔 상태에서 **Create App**을 누르고, **Next step**을 선택합니다.
+9\. App clients 페이지에서는 **Add an app client** 링크를 click 합니다. **App client Name** 텍스트 박스에 "Zombie Survivor Chat App"이라고 적고, **Generate client secret 체크박스를 선택하지 않습니다.**. 그리고, **Set attribute read and write permissions** 링크를 click 합니다. 앱에서 맞춤형 속성 값에 "writable" 접근 권한을 주어야 합니다. **Writable Attributes** 체크 박스에 **custom:slackuser, custom:slackteamdomain, custom:camp** 항목을 체크하고, 나머지는 그대로 둔 상태에서 **Create app client**버튼을 누르고, **Next step**을 선택합니다.
 
-10\. (중요) 여러 박스 중에 **Pre authentication** 와 **Post confirmation** 의 드롭다운 메뉴에서 "[Your CloudFormation Stack name]-CognitoLambdaTrigger-리전코드"라는 Lambda 함수를 선택한 후, **Next step**을 누릅니다.
+10\. (중요) Triggers 페이지에서 여러 박스 중에 **Pre authentication** 와 **Post confirmation** 의 드롭다운 메뉴에서 "[Your CloudFormation Stack name]-CognitoLambdaTrigger-리전코드"라는 Lambda 함수를 선택한 후, **Next step**을 누릅니다.
 
 * Cognito User Pools을 통해 개발자들은 사용자 가입 및 로그인 과정에서 맞춤형 진행 방식을 구현할 수 있습니다. 이러한 워크플로 로직은 Lambda Trigger를 통한 AWS Lambda 함수를 사용할 수 있습니다.
 
@@ -143,29 +143,29 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
     * 본 워크샵에서 위의 두 가지 트리거를 위해 하나의 Lambda 함수를 사용합니다. 실행 할 때, 위의 두 가지 형태를 모드 체크해서 처리합니다. 더 자세한 것은 관련 Lambda 함수를 참고하시기 바랍니다.
 
-11\. 설정을 모두 검토 한 후, **Create pool**를 선택합니다. 사용자 풀이 성공적으로 만들어졌다면, 세부 항목 페이지로 돌아가야 합니다.
+11\. Review 페이지에서 설정을 모두 검토 한 후, **Create pool**를 선택합니다. 사용자 풀이 성공적으로 만들어졌다면, 세부 항목 페이지로 돌아가야 합니다.
 
-12\. PC의 텍스트 에디터를 열고, 세부 페이지의 **Pool Id**를 복사해 둡니다. 왼쪽 메뉴의 **Apps** 탭을 열면 보실 수 있는 **App client id** 를 또한 같이 복사해 둡니다. 
+12\. PC의 텍스트 에디터를 열고, 세부 페이지의 **Pool Id**를 복사해 둡니다. 왼쪽 메뉴의 **App clients** 탭을 열면 보실 수 있는 **App client id** 를 또한 같이 복사해 둡니다.
 
-이제 User Pools는 모두 설정이 되었습니다. 이제 만들어진 Codnito Identity Pool로 통합하는 설정을 해보겠습니다.
+이제 User Pools는 모두 설정이 되었습니다. 이제 만들어진 Cognito Identity Pool로 통합하는 설정을 해보겠습니다.
 
 * [Amazon Cognito Identity Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-identity.html)은 이미 설정되어 있습니다. AWS로 부터 받은 임시 토큰으로 애플리케이션에서 API 호출을 할 수 있습니다.
 
 * User Pool을 통한 인증 설정은 모두 마쳤고, 이제 IAM 인증 API 호출을 위한 접근 제어를 해야 합니다. 또한, 우리가 만든 Users Pool을 **Authentication Provider**로 설정합니다.
 
-관리 콘솔의 상단 메뉴에서, 아래와 같이 **Federated Identities**을 선택합니다.
+관리 콘솔의 좌측 상단 메뉴에서, 아래와 같이 **Federated Identities**을 선택합니다.
 
 ![Navigating to Federated Identities Console](/Images/Cognito-Step12.png)
 
 13\. 기존에 만들어진 Identity Pool을 선택합니다. 이름은 "[Your CloudFormation stack name] _ identitypool"라고 되어 있습니다. 대시보드에서 오른쪽 상단의 **Edit identity pool**를 선택합니다.
 
-14\. Cognito Identity에서는 등록된 사용자 및 손님 모드를 모두 지원합니다. 사용자 그룹과 연계된 접근 권한은 Cognito 역할에 연결된 IAM으로 좌우됩니다. 인증 및 비인증 Congnito 역할은 이미 CloudFormation으로 만들어져 있습니다. 인증 역할은 서버리스 앱과 연계된 API Gateway 엔드포인트 ARN으로 "execute-api:invoke" 호출을 만들 수 있는 권한을 가지고 있습니다. 
+14\. Cognito Identity에서는 등록된 사용자 및 guest 모드를 모두 지원합니다. 사용자 그룹과 연계된 접근 권한은 Cognito 역할에 연결된 IAM으로 좌우됩니다. 인증 및 비인증 Congnito 역할은 이미 CloudFormation으로 만들어져 있습니다. 인증 역할은 서버리스 앱과 연계된 API Gateway 엔드포인트 ARN으로 "execute-api:invoke" 호출을 만들 수 있는 권한을 가지고 있습니다.
 
 * 사용자가 애플리케이션으로 로그인 할 때, 인증된 사용자가 되고 애플리케이션은 메시지를 보낼 수 있는 권한을 얻게 됩니다.  
 
-15\. "Authenticated providers"라는 이름의 검은색 드롭다운 메뉴를 누릅니다. 우리가 만든 Identity pool을 Congnito User Pool 및 Identity Provider로 연동합니다. "Cognito" identity provider 탭을 선택하고, 이전에 복사해 둔 **User Pool ID** 및 **App Client ID**을 붙여 넣기 합니다. (이 두 가지 정보는 아래에서 설정할 때 필요하니 텍스트 에디터를 아직 열어두시기 바랍니다.혹시 아까 복사하지 않으셨다면, Cognito User Pool에 되돌아 가셔서 User Pool Id 및 App Client ID을 복사해 오시기 바랍니다.)
+15\. "Authentication providers"라는 이름의 검은색 드롭다운 메뉴를 누릅니다. 우리가 만든 Identity pool을 Congnito User Pool 및 Identity Provider로 연동합니다. "Cognito" identity provider 탭을 선택하고, 이전에 복사해 둔 **User Pool ID** 및 **App Client ID**을 붙여 넣기 합니다. (이 두 가지 정보는 아래에서 설정할 때 필요하니 텍스트 에디터를 아직 열어두시기 바랍니다. 혹시 아까 복사하지 않으셨다면, Cognito User Pool에 되돌아 가셔서 User Pool Id 및 App Client ID을 복사해 오시기 바랍니다.)
 
-페이지 밑까지 스크롤을 하여 **Save Changes**을 누릅니다. 이제 Cognito User Pool을 Identity Pool과 연결하여, 사용자를 위한 보안 토큰을 앱에서도 사용할 수 있게 되었습니다. 
+페이지 밑까지 스크롤을 하여 **Save Changes**을 누릅니다. 이제 Cognito User Pool을 Identity Pool과 연결하여, 사용자를 위한 보안 토큰을 앱에서도 사용할 수 있게 되었습니다.
 
 16\. 자바스크립트 앱과 사용자 로그인한 User Pool과 연결하기 위해 애플리케이션 설정 파일을 업데이트 해야 합니다.  
 
@@ -177,17 +177,17 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 18\. 버킷 내에는 서버리스 자바스크립트 애플리케이션과 본 워크샵의 Lambda 함수 소스 코드 및 CloudFormation 자원 등이 들어 있습니다. (이들 파일을 절대 지우시면 안됩니다.) 이제 버킷 내 **S3/assets/js/constants.js**을 선택 합니다.
 
-Download the **S3/assets/js.constants.js** file to your local machine and open it with a text editor.
+**S3/assets/js.constants.js** 파일을 다운로드해서 text editor로 파일을 엽니다.
 
 ![Download the constants.js file](/Images/Cognito-Step18.png)
 
-19\. 이제 constants.js 파일을 다운로드 한 후 텍스트 에디터로 열어서  이전에 복사해 둔 값을 "USER_POOL_ID"에 설정합니다. "CLIENT_ID" 변수에는 App Client ID를 넣습니다.
+19\. 이제 constants.js 파일을 다운로드 한 후 텍스트 에디터로 열어서 이전에 복사해 둔 값을 "USER_POOL_ID"에 설정합니다. "CLIENT_ID" 변수에는 App Client ID를 넣습니다.
 
 * 자바스크립트 애플리케이션은 이들 설정 값을 이용하여 본 워크샵 내 각각 다른 실습 사이의 통신에 사용하게 됩니다.
 
 * The Identity Pool Id는 CloudFormation 템플릿을 실행했을 때, 다른 몇 가지 변수와 함께 자동으로 채워집니다.
 
-20\. 이제 constants.js를 저장하고, S3로 다시 업로드를 합니다. 콘솔에서 푸른색 **Upload** 버튼을 눌러 로컬 PC에서 파일을 선택해서 업로드할 것입니다. Upload 창 아래의 **"Set Details->SetPermissions"을 선택하고, "Make everything public"를 체크합니다**. 그리고 난 후, **Start Upload**를 눌러 기존 파일을 덮어쓰면 됩니다. 정확한 폴더에 업로드를 했는지 한번 더 확인해 보시기 바랍니다.
+20\. 이제 constants.js를 저장하고, S3로 다시 업로드를 합니다. 콘솔에서 푸른색 **Upload** 버튼을 눌러 로컬 PC에서 파일을 선택해서 업로드할 것입니다. 파일 선택 후, Upload 창 우측 아래의 Next를 누르고 하단의 **"Manage public permissions" 아래의 콤보박스를 눌러서, "Grant public read access to this object(s)"를 선택합니다**. 그리고 난 후, **Upload** 버튼을 눌러서 업로드하면 기존 파일을 덮어쓰게 됩니다. 정확한 폴더에 업로드를 했는지 한번 더 확인해 보시기 바랍니다.
 
 * 이제 Congnito에 대한 설정은 모두 마쳤습니다.
 
@@ -197,13 +197,13 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 22\. 이제 로그인 페이지가 보이면, **Sign Up** 버튼을 눌러 회원 가입을 해야 합니다.
 
-23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 번호 인증이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예:  888-280-4331)를 넣으셔야 합니다.   
+23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 번호 validation이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예:  8882804331)를 넣으셔야 합니다. 실습을 위한 것이므로 임의의 10자리를 입력하면 됩니다. 단, 0으로 시작하는 것은 안됩니다.
 
 * **Select your Camp**: 여러분이 살고 있는 지역을 입력합니다. 본 애플리케이션에서 현재 속성은 사용되지 않지만, 향후에 추가적으로 사용할 수 있습니다. 워크샵 실습을 종료한 후 부록에 있는 별도 도전 사항을 시도해 보시기 바랍니다.
 
-* **Slack Username**: 슬랙 실습 과정에서 사용할 슬랙 사용자명을 입력합니다. (예: channy)
+* **Slack Username**: 슬랙 실습 과정에서 사용할 슬랙 사용자명을 입력합니다. (예: channy) 기존 slack username이 있다면 그것을 사용하셔도 됩니다. 새로 만들어야 한다면 적절한 값을 입력하고 그 값을 기록해두도록 합니다(slack 가입 시 필요).
 
-* **Slack Team Domain Name**: 슬랙은 여러 사용자가 함께 사용할 수 있습니다. 슬랙 실습 과정에서 사용할 도메인 명을 입력합니다.(예: channy-zombie-team) 기존에 개인적으로 사용하는 슬랙 도메인이나 사용자명이 있으시면 그것을 사용하셔도 됩니다.
+* **Slack Team Domain Name**: 슬랙은 여러 사용자가 함께 사용할 수 있습니다. 슬랙 실습 과정에서 사용할 도메인 명을 입력합니다.(예: channy-zombie-team) 기존에 개인적으로 사용하는 슬랙 도메인이나 사용자명이 있으시면 그것을 사용하셔도 됩니다. 새로 만들어야 한다면 적절한 값을 입력하고 그 값을 기록해두도록 합니다(slack 가입 시 필요).
 
 이제 **Sign Up**을 클릭합니다.
 
@@ -211,7 +211,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 ![Confirm your signup](/Images/Cognito-Step24.png)
 
-계정 설정이 완료된 경우, 메시지 창에 입력하면 채팅을 시작할 수 있습니다. 
+계정 설정이 완료된 경우, 로그인하여 메시지 창에 입력하면 채팅을 시작할 수 있습니다.
 
 25\. 메시지는 중앙 채팅 창에 보이게 됩니다. URL을 팀원에게 공유하여 함께 채팅을 할 수 있습니다. 만약 혼자시면, 다른 웹 브라우저에서 새로 창을 열어 다른 이메일 주소로 들어와서 채팅 테스트가 가능합니다. 한 PC에서 두 사람 이상 로그인해서 시뮬레이션 하실 때는 다른 웹 브라우저를 사용하시기 바랍니다.
 
@@ -219,15 +219,15 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 *(주의) 본 워크샵은 API Gateway 캐시를 활용하지 않습니다. 본 기능은 꼭 꺼두셔야 합니다. 이 부분은 AWS 무료 제공 범위에 속하지 않기 때문에, 추가 비용을 만들 수 있으며 본 워크샵에서도 필수 기능이 아닙니다.*
 
-## Lab 1 - 생존자 채팅 기능
+## Lab 1 - 메세지 입력자 표시기능
 
 **실습 소개**
 
-본 실습에서는 생존자가 현재 채팅룸에서 입력하고 있는 것을 볼 수 있는 기능을 추가합니다. 이를 위해서 간단하게 API를 만들고 Lambda 함수를 통해 타이핑하는 메타 데이터를 DynamoDB 테이블로 보내어 상세 정보를 저장합니다. 생존자 채팅 앱은 API 엔드 포인트에서 주기적으로 데이터를 가져와서 누가 타이핑하고 있는지 확인합니다. 본 기능은 웹 채팅 클라이언트의 채팅 메시지 패널 아래에 표시됩니다. 본 실습 절차는 UI 및 백엔드 Lambda 함수로 구현을 하고 이를 API Gateway로 연동하는데 초점을 맞추고 있습니다.  
+본 실습에서는 현재 채팅룸에서 입력하고 있는 생존자가 누구인지를 볼 수 있는 기능을 추가합니다. 이를 위해서 간단하게 API를 만들고 Lambda 함수를 통해 타이핑하는 메타 데이터를 DynamoDB 테이블로 보내어 상세 정보를 저장합니다. 생존자 채팅 앱은 API 엔드 포인트에서 주기적으로 데이터를 가져와서 누가 타이핑하고 있는지 확인합니다. 본 기능은 웹 채팅 클라이언트의 채팅 메시지 패널 아래에 표시됩니다. 본 실습 절차는 UI 및 백엔드 Lambda 함수로 구현을 하고 이를 API Gateway로 연동하는데 초점을 맞추고 있습니다.  
 
 애플리케이션은 [CORS](http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html) 기능을 사용하며, CORS 기능을 켜서 Lambda 함수 및 백엔드 연동이 가능하도록 합니다.  
 
-**생존자 채팅 기능 구조**
+**메세지 입력자 표시기능 구조**
 ![Overview of Typing Indicator Architecture](/Images/TypingIndicatorOverview.png)
 
 1\. AWS 관리 콘솔에서 API Gateway 서비스를 선택합니다.
@@ -242,7 +242,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 4\. **Integration Request** 박스를 클릭합니다.
 
-5\. "Integration Type" 밑에 **Lambda Function.**를 선택합니다.
+5\. "Integration Type" 에서 **Lambda Function**를 선택합니다.
 
 *   현재 본 API 메소드는 "MOCK" 연동으로 설정되어 있습니다. MOCK 연동은 샘플 가짜 데이터를 테스트할 수 있도록 API 백엔드를 연동해 두어 테스트를 하는데 유용합니다. 현재 MOCK 연동 설정을 삭제하고, 실제 DynamoDB 테이블에 조회를 할 Lambda 함수를 연결하면 됩니다.
 
@@ -252,13 +252,13 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 7\. **Lambda Function** 항목에서 "gettalkers"라고 입력합니다. 자동 완성 항목을 선택하면,  "GetTalkersFromDynamoDB"라는 이름이 포함된 항목을 선택합니다. 예를 들어, **_[CloudformationTemplateName]_**-GetTalkersFromDynamoDB-**_[XXXXXXXXXX]_** 식으로 표시되어 있습니다.
 
-*   본 Lambda 함수는 Node.JS로 만들어져 있으며, Talkers라는 테이블에서 데이터를 읽어오는 기능만 수행합니다. 이 테이블에는 사용자가 채팅창에 입력할 때 마다 내용을 기록합니다. GET 메소드에 Lambda 함수를 연결함으로서 채팅앱이 API Gateway에 연결하여 GET 요청을 하면 본 기능을 수행하게 됩니다.  
+*   본 Lambda 함수는 Node.JS로 만들어져 있으며, Talkers라는 테이블에서 데이터를 읽어오는 기능만 수행합니다. 이 테이블에는 사용자가 채팅창에 입력할 때 마다 갱신되는 내용이 기록되어 있습니다. GET 메소드에 Lambda 함수를 연결함으로서 채팅앱이 API Gateway에 연결하여 GET 요청을 하면 본 기능을 수행하게 됩니다.  
 
-8\. **Save** 버튼을 누르고, Lambda 함수 통합을 하고자 팝업이 뜨면 **OK**를 클릭합니다. API Gateway를 위한 접근을 허가하고 Lambda 함수를 실행하도록 "OK"를 다시 한번 누릅니다. 두번째 팝업은 API Gateway가 Lambda 함수를 실행할 수 있도록 허가해 줍니다.
+8\. **Save** 버튼을 누르고, Lambda 함수 통합을 하고자 팝업이 뜨면 **OK**를 클릭합니다. API Gateway를 위한 접근을 허가하고 Lambda 함수를 실행하도록 "OK"를 다시 한번 누릅니다. 두번째 팝업은 API Gateway가 Lambda 함수를 실행할 수 있도록 허가해 줍니다. 설정이 완료되면 Method Execution 링크를 눌러서 메소드 실행 플로우로 돌아갑니다.
 
-9\. 오른쪽 메소드 실행 플로우의 Method Response 영역을 선택합니다. API Gateway에서 어떤 HTTP 응답을 보낼 수 있는지 설정할 수 있습니다. 
+9\. 오른쪽 메소드 실행 플로우의 Method Response 영역을 선택합니다. API Gateway에서 어떤 HTTP 응답을 보낼 수 있는지 설정할 수 있습니다.
 
-10\. 200 HTTP Status response을 만들겠습니다. "Add Response"를 눌러, status code 텍스트 입력에 "200"이라고 적고 아래 그림과 같이 메소드 저장을 위한 작은 체크박스를 클릭합니다.
+10\. 200 HTTP Status response을 만들겠습니다. "Add Response"를 눌러, status code 텍스트 입력에 "200"이라고 메소드 저장을 위해 우측의 작은 체크박스를 클릭합니다. 그러면 아래와 같은 화면이 됩니다.
 
 ![Method Response](/Images/Typing-Step10.png)
 
@@ -278,7 +278,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 15\. 200 응답을 추가합니다. "Add Response"를 클릭하고, "200"을 상태 코드 입력창에 넣은 후 메소드 응답 저장을 위해 체크 박스를 클릭합니다.
 
-16\. OPTIONS 메소드 플로 차트로 되돌아가서, Integration Response를 선택합니다. (되돌아가려면, "Method Execution"라는 푸른색 링크를 클릭하세요. 다시 메소드 실행 보기 화면을 보여주게 됩니다.)
+16\. OPTIONS 메소드 플로우 차트로 되돌아가서, Integration Response를 선택합니다. (되돌아가려면, "Method Execution"라는 푸른색 링크를 클릭하세요. 다시 메소드 실행 보기 화면을 보여주게 됩니다.)
 
 17\. Integration Response를 선택합니다.
 
@@ -291,7 +291,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 20\. "Actions" 박스를 클릭하고, 드롭다운에서 "Enable CORS"를 선택합니다.
 
-21\. **Enable CORS and replace ...**을 누른 후, 다음 창에서 **Yes, replace existing value**를 눌러 기존의 설정을 변경합니다. 아래와 같이 CORS 옵션에 모든 체크 부분에 녹색으로 보여야 합니다.
+21\. **Enable CORS and replace ...** 버튼을 누른 후, 다음 창에서 **Yes, replace existing value**를 눌러 기존의 설정을 변경합니다. 아래와 같이 CORS 옵션에 모든 체크 부분에 녹색으로 보여야 합니다.
 ![talker resource](/Images/Typing-Step21.png)
 
 * 만약, 모든 체크 마크가 녹색이 아니면 위에서 진행한 HTTP 상태 코드 200을 추가하는 과정에서 뭔가 누락된 것입니다. 위의 단계를 다시 확인하셔서 POST, GET, OPTIONS 메소드의 200 상태 코드를 추가하세요.
@@ -305,7 +305,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 **LAB 1 실습 종료**
 
-이제 사용자가 입력하는 내용은 POST 요청을 통해 지속적으로 Talkers DynamoDB 테이블에 추가됩니다. GET 요청을 계속적으로 호출(pulling)해서 테이블에서 일어나는 사용자의 타이핑 내역을 웹 애플리케이션에 표시해 줄 수 있게 되었습니다.
+이제 누가 타이핑하는지가 timestamp와 함께 POST 요청을 통해 지속적으로 Talkers DynamoDB 테이블에 추가됩니다. GET 요청을 계속적으로 호출(polling)해서 테이블에서 누가 타이핑 하는지를 체크해서 웹 애플리케이션의 "Users Typing" 필드에 표시해 줄 수 있게 되었습니다.
 
 ![talker resource](/Images/Typing-Done.png)
 
@@ -373,7 +373,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 17\. **Method Execution** 스크린의 "POST" 메소드에서 "Integration Request" 박스가 /twilio 리소스에 대해 **MOCK**의 형식으로 보여야 합니다.
 
-18\. Lambda 함수와 Mock integration을 하기 위해서는 **Integration Request**를 바꾸어야 합니다. **Integration Request**을 클릭 한후, 화면에서 "Integration type" 라디오 버튼을 **Lambda Function**로 선택합니다. "Lambda Region"에서 드롭다운을 해서 CloudFormation 작업 및 TwilioProcessing Lambda 함수를 만든 리전을 선택합니다. **Lambda Function** 이름에서는 "TwilioProcessing"를 치면, 우리가 만든 함수가 자동완성됩니다. **TwilioProcessing** 함수를 선택 한 후, **Save** 버튼을 누립니다. 팝업창에서 Lambda 함수 연계에 대해 **OK**를 누릅니다. 그런 다음, API Gateway 접근 권한에 대해 확인을 하고 **OK**를 누릅니다. 몇 초 정도 지나면 완료됩니다. 
+18\. Lambda 함수와 Mock integration을 하기 위해서는 **Integration Request**를 바꾸어야 합니다. **Integration Request**을 클릭 한후, 화면에서 "Integration type" 라디오 버튼을 **Lambda Function**로 선택합니다. "Lambda Region"에서 드롭다운을 해서 CloudFormation 작업 및 TwilioProcessing Lambda 함수를 만든 리전을 선택합니다. **Lambda Function** 이름에서는 "TwilioProcessing"를 치면, 우리가 만든 함수가 자동완성됩니다. **TwilioProcessing** 함수를 선택 한 후, **Save** 버튼을 누립니다. 팝업창에서 Lambda 함수 연계에 대해 **OK**를 누릅니다. 그런 다음, API Gateway 접근 권한에 대해 확인을 하고 **OK**를 누릅니다. 몇 초 정도 지나면 완료됩니다.
 
 19\. **Save**을 누른 후, "POST" 메소드에 대한 Method Execution 페이지로 옵니다. 맵핑 템플릿을 설정하기 위해  **Integration Request**를 합니다. Method Execution 화면에서 **Integration Request**를 누릅니다.
 
@@ -416,11 +416,11 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 27\. 이제 스크롤을 위래 올려서 푸른색 **Save** 버튼을 누립니다. 마지막으로 API Gateway 콘솔의 왼쪽의 **Actions** 버튼을 누르고, API 배포를 위해 **Deploy API**를 선택합니다. API 배포 창에서는 드롭다운에서 **ZombieWorkshopStage**를 선택한후, **Deploy**를 누릅니다.
 
-28\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. Twilio 전화 번호로 이제 문자 메시지를 보내시면, 채팅창에 전달이됩니다. (주의: 미국 번호인 경우, SMS 전송 비용이 발생할 수 있습니다. 메시지를 보낼 때는, 국제 문자 보내는 것과 같이 +를 누르고 보내시면 됩니다. 또한, 채팅 애플리케이션은 여러분의 진짜 전화 번호인지를 필터링 합니다. 따라서, DynamoDB의 사용자 테이블의 전화 번호를 바꾸실 필요가 있습니다. DynamoDB 콘솔 화면에서, 왼쪽 메뉴의 Table을 선택 하신 후, **[Your-stack-name]-users** 테이블을 선택하고, **Items** 탭을 선택 합니다. 등록한 아이디의 전화번호(미국 번호)를 여러분의 휴대폰 번호로 수정하려면, phone 필드를 선택해 연필 아이콘을 눌러 수정하실 수 있습니다. 문자 메시지 내용이 도착하지 않는 경우, 로그아웃 후 다시 로그인 해보시기 바랍니다.) 
+28\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. Twilio 전화 번호로 이제 문자 메시지를 보내시면, 채팅창에 전달이됩니다. (주의: 미국 번호인 경우, SMS 전송 비용이 발생할 수 있습니다. 메시지를 보낼 때는, 국제 문자 보내는 것과 같이 +를 누르고 보내시면 됩니다. 또한, 채팅 애플리케이션은 여러분의 진짜 전화 번호인지를 필터링 합니다. 따라서, DynamoDB의 사용자 테이블의 전화 번호를 바꾸실 필요가 있습니다. DynamoDB 콘솔 화면에서, 왼쪽 메뉴의 Table을 선택 하신 후, **[Your-stack-name]-users** 테이블을 선택하고, **Items** 탭을 선택 합니다. 등록한 아이디의 전화번호(미국 번호)를 여러분의 휴대폰 번호로 수정하려면, phone 필드를 선택해 연필 아이콘을 눌러 수정하실 수 있습니다. 문자 메시지 내용이 도착하지 않는 경우, 로그아웃 후 다시 로그인 해보시기 바랍니다.)
 
 **LAB 2 실습 종료**
 
-본 실습을 완료하면, 문자 전송과 동시에 채팅 앱 창에 문자 메시지가 표시되게 됩니다. 이제 Twilio 문자 메시지를 통해 생존자와 서로 통신할 수 있게 되었습니다. 
+본 실습을 완료하면, 문자 전송과 동시에 채팅 앱 창에 문자 메시지가 표시되게 됩니다. 이제 Twilio 문자 메시지를 통해 생존자와 서로 통신할 수 있게 되었습니다.
 
 * * *
 
@@ -460,13 +460,13 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 12\. **Configure Triggers** 설정 부분에서는 DynamoDB를 선택하고, **messages**라는 DynamoDB table을 선택합니다. 아마 **"[Your CloudFormation stack name]-messages"**로 보일 것입니다. **Batch size**를 **5**로 설정하고, **Starting position**을 **Lastest**로 선택하고, **Enable trigger** 체크박스를 선택합니다.이제 "Next" 버튼을 누릅니다.  
 
-13\. 함수명은 **"[Your CloudFormation stack name]-ESsearch"**와 같이 넣으시고, Runtime은 Node.js 4.3를 선택합니다. 설명은 간단히 원하는대로 입력하셔도 됩니다. 
+13\. 함수명은 **"[Your CloudFormation stack name]-ESsearch"**와 같이 넣으시고, Runtime은 Node.js 4.3를 선택합니다. 설명은 간단히 원하는대로 입력하셔도 됩니다.
 
 14\. 이제 Github의 "ElasticsearchLambda" 폴더에 있는 ZombieWorkshopSearchIndexing.js 파일을 복사하여 Lambda 함수를 만듭니다.
 
 15\. 코드 내 [line 6](/ElasticSearchLambda/ZombieWorkshopSearchIndexing.js#L6)에 **region** 코드를 정확하게 입력합니다. (CloudFormation Stack 및 Lambda 함수를 만든 리전)
 
-7번째 행에는 **endpoint**를 **ENDPOINT_HERE**에 대체합니다. 8번 단계에서 기록해 둔 Elasticsearch 엔드포인트로서 **https://로 시작**하는 것을 정확히 붙여넣습니다. 
+7번째 행에는 **endpoint**를 **ENDPOINT_HERE**에 대체합니다. 8번 단계에서 기록해 둔 Elasticsearch 엔드포인트로서 **https://로 시작**하는 것을 정확히 붙여넣습니다.
 
 * 클러스터 설정이 완료되고 "Active" 상태에서 본 과정을 진행해야 합니다.
 
@@ -491,7 +491,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 본 실습에서는 생존자 채팅을 Slack 채널과 연동하게 됩니다. 좀비 사태 생존자들은 별도의 채팅 앱을 통해 정보를 교환할 수도 있기 때문에, 멀티 소통 수단을 지원하는 것은 매우 중요합니다. 본 실습을 마치면, Slack을 사용하는 생존자들도 우리 채팅앱으로 "/" 명령어를 통해 메시지를 보낼 수 있습니다. 슬랙 명령어로 메시지를 보내면, 이는 우리 채팅 API로 전달이 되게 되는데 이는 두번째 Twilio 실습과 유사합니다.
 
-만약 여러분이 아직 Slack 서비스에 익숙하지 않으시다면, 한번 설치해서 사용해 보시길 권장합니다. 개발자 커뮤니티에서 매우 인기 있는 커뮤니케이션 수단입니다. Slack은 "Channels"이라는 독특한 채팅 방을 사용합니다. 좀 더 자세한 사항은 웹 사이트를 참고하세요. 
+만약 여러분이 아직 Slack 서비스에 익숙하지 않으시다면, 한번 설치해서 사용해 보시길 권장합니다. 개발자 커뮤니티에서 매우 인기 있는 커뮤니케이션 수단입니다. Slack은 "Channels"이라는 독특한 채팅 방을 사용합니다. 좀 더 자세한 사항은 웹 사이트를 참고하세요.
 
 **Slack 연동 아키텍처**
 ![Overview of Slack Integration](/Images/SlackOverview.png)
@@ -536,7 +536,7 @@ Download the **S3/assets/js.constants.js** file to your local machine and open i
 
 16\. **Create function**를 눌러 함수를 만듭니다.
 
-17\. 함수가 만들어지면, AWS 관리 콘솔에서 API Gateway 서비스로 이동합니다. "Zombie Workshop API Gateway" API에서 왼쪽 메뉴의 "/zombie" 리소스를 선택합니다. 그리고, **Actions** 버튼을 누리고, "Create Resource"를 합니다. 리소스 이름은 **slack**이라고 하고 "Create Resource"를 눌러 API 서비스를 만듭니다. 설정이 끝나면 아래 화면과 같이 됩니다. 
+17\. 함수가 만들어지면, AWS 관리 콘솔에서 API Gateway 서비스로 이동합니다. "Zombie Workshop API Gateway" API에서 왼쪽 메뉴의 "/zombie" 리소스를 선택합니다. 그리고, **Actions** 버튼을 누리고, "Create Resource"를 합니다. 리소스 이름은 **slack**이라고 하고 "Create Resource"를 눌러 API 서비스를 만듭니다. 설정이 끝나면 아래 화면과 같이 됩니다.
 ![Create Slack API Resource](/Images/Slack-Step17.png)
 
 * 이번 단계에서는 Slack의 "/" 명령을 수행할 경우 오는 호출을 처리하는 API 서비스를 만들었습니다. 다음 단계는 POST 메소드를 만들어서 이를 Lambda 함수와 연계시키고, API 호출로 들어온 데이터를 전처리 한후 /zombie/message 엔드포인트로 보내 DynomoDB에 입력시키게 됩니다.
@@ -579,9 +579,9 @@ Twilio lab에서 했던 대로, JSON 으로 요청을 변환하기 위해 VTL �
 
 * * *
 
-## Lab 5 - Intel Edison 좀비 모션 센서 연동 
+## Lab 5 - Intel Edison 좀비 모션 센서 연동
 
-본 실습에서는 좀비로 부터 생존자를 보호하기 위해 좀비 모션 센서를 만들어 근처에 좀비가 출몰하고 있는지를 감지하는 하드웨어를 만들고, 좀비가 근처에 오게 되면 Lambda 함수를 통해 모션 센서 변화를 채팅 앱으로 전달하는 역할을 하는 IoT 디바이스 및 서비스를 구축하려고 합니다. 
+본 실습에서는 좀비로 부터 생존자를 보호하기 위해 좀비 모션 센서를 만들어 근처에 좀비가 출몰하고 있는지를 감지하는 하드웨어를 만들고, 좀비가 근처에 오게 되면 Lambda 함수를 통해 모션 센서 변화를 채팅 앱으로 전달하는 역할을 하는 IoT 디바이스 및 서비스를 구축하려고 합니다.
 
 **IoT 연동 아키텍처**
 ![Zombie Sensor IoT Integration](/Images/EdisonOverview.png)
@@ -607,7 +607,7 @@ Twilio lab에서 했던 대로, JSON 으로 요청을 변환하기 위해 VTL �
 
 아래는 Intel Edison의 호출 예제입니다.
 
-``` 
+```
 {"message":"A Zombie has been detected in London!", "value":"1", "city":"London", "longtitude":"-0.127758", "lattitude":"51.507351"}
 ```
 
@@ -634,17 +634,17 @@ Intel Edison -> SNS topic -> 토픽에 트리거 된 AWS Lambda 함수
 
 * 에디슨 보드를 2개의 USB 케이블을 통해 자신의 PC에 연결합니다. [연결 가이드](https://software.intel.com/en-us/node/628233)를 참고하실 수 있습니다.
 * Mac 사용자의 경우, 터미널에서 "screen /dev/tty.usbs"를 누르고, 탭을 눌러 자동 완성되는 디바이스 포트를 선택하고 ‘115200 -L’를 추가하고 접속합니다. 즉, **$ screen /dev/tty.usbs.A129828F 115200 -L** 형식입니다.
-* PC 사용자의 경우, Putty를 다운로드 한 후, "serial" 연결을 선택 하고, 장치 관리자에서 자동으로 추가된 COM 포트 숫자와 접속 속도 115200을 선택하고 접속합니다. 
+* PC 사용자의 경우, Putty를 다운로드 한 후, "serial" 연결을 선택 하고, 장치 관리자에서 자동으로 추가된 COM 포트 숫자와 접속 속도 115200을 선택하고 접속합니다.
 * 접속이 되면, ID에 root라고 치고, 암호 없이 접속이 가능합니다.
 * 에디슨의 Wi-Fi 설정을 위해 **$ configure_edison --wifi**를 통해 인터넷 접속을 진행합니다.
 
 2\. Grove PIR Motion Sensor를 보드의 D6에 연결합니다.
 
-3\. Github 레포지터리의 'zombieIntelEdisonCode' 폴더에서 소스 코드를 모두 에디슨에 다운로드합니다. main.js 파일(애플리케이션)과 package.json (의존성 라이브러리) 파일로 구성되어 있습니다. **wget**을 이용하여 Github 레포지터리에서 raw file을 바로 다운로드 하시면 됩니다. 
+3\. Github 레포지터리의 'zombieIntelEdisonCode' 폴더에서 소스 코드를 모두 에디슨에 다운로드합니다. main.js 파일(애플리케이션)과 package.json (의존성 라이브러리) 파일로 구성되어 있습니다. **wget**을 이용하여 Github 레포지터리에서 raw file을 바로 다운로드 하시면 됩니다.
 
 3\. 이제 Node.js 앱에서 필요한 라이브러리를 설치합니다. main.js가 위치한 디렉토리에서 **$npm install**을 입력합니다. 몇 분 정도가 걸릴 수 있으며, 경고가 나오더라도 조금 기다리면 됩니다. 기다리는 동안 아래 4번을 진행하세요.
 
-4\. IAM 사용자 Access Key와 Secret Access Keys를 만들어서 SNS 토픽 메시지를 제공해야 합니다. [IAM 사용자 생성 가이드](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)를 참고하시기 바랍니다. 
+4\. IAM 사용자 Access Key와 Secret Access Keys를 만들어서 SNS 토픽 메시지를 제공해야 합니다. [IAM 사용자 생성 가이드](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)를 참고하시기 바랍니다.
 
 * AWS 관리 콘솔의 [IAM User](https://console.aws.amazon.com/iam/home?#users)에 가신 후, **Create New Users**를 누른 후, "zombiesns"라는 사용자를 만듭니다. **Generate an access key for each user**를 체크한 상태에서, **Create** 버튼을 누르면, 자동으로 인증키들이 만들어져 "credential.csv" 파일로 다운로드 가능합니다.
 
@@ -661,25 +661,25 @@ Intel Edison -> SNS topic -> 토픽에 트리거 된 AWS Lambda 함수
 }
 ```
 
-5\. 자 이제, AWS 키 정보, 리전 정보, SNS 토픽 정보를 클라이언트 프로그램인 main.js 파일에 모두 설정합니다. 
+5\. 자 이제, AWS 키 정보, 리전 정보, SNS 토픽 정보를 클라이언트 프로그램인 main.js 파일에 모두 설정합니다.
 
-``` 
-AWS.config.update({accessKeyId: 'ENTER ACCESSKEY HERE', secretAccessKey: 'ENTER SECRET ACCESS KEY HERE', region: 'ENTER REGION HERE'}); 
+```
+AWS.config.update({accessKeyId: 'ENTER ACCESSKEY HERE', secretAccessKey: 'ENTER SECRET ACCESS KEY HERE', region: 'ENTER REGION HERE'});
 ```
 
 6\. 아래는 SNS 토픽이 만든 리전을 입력합니다. (예: us-west-2)
 
-``` 
-var sns = new AWS.SNS({region: 'ENTER REGION HERE'}); 
+```
+var sns = new AWS.SNS({region: 'ENTER REGION HERE'});
 ```
 
 7\. 아래는 SNS 토픽에서 만든 ARN 주소를 붙여 넣습니다.
 
-``` 
-TopicArn: "ENTER YOUR SNS TOPIC ARN HERE" 
+```
+TopicArn: "ENTER YOUR SNS TOPIC ARN HERE"
 ```
 
-8\. 이제 여러분의 앱이 에디슨 기기에서 실행되면 SNS 토픽을 게시합니다. AWS Lambda 함수에서 이들 메시지를 받아서 처리를 합니다. 좀 더 자세한 부분은 [기술 문서](http://docs.aws.amazon.com/sns/latest/dg/sns-lambda.html)를 참고하시고, SNS 알림과 채팅 애플리케이션을 연동해 보겠습니다. 
+8\. 이제 여러분의 앱이 에디슨 기기에서 실행되면 SNS 토픽을 게시합니다. AWS Lambda 함수에서 이들 메시지를 받아서 처리를 합니다. 좀 더 자세한 부분은 [기술 문서](http://docs.aws.amazon.com/sns/latest/dg/sns-lambda.html)를 참고하시고, SNS 알림과 채팅 애플리케이션을 연동해 보겠습니다.
 
 ####SNS 토픽 메시지 채팅앱에 연동하기
 
@@ -740,4 +740,4 @@ Lambda 함수 편집기에 붙여 넣을 때, 소스 코드 상의 몇 가지 �
 
 ## 부록
 
-* 추가 도전 과제: 본 워크샵에서는 생존자의 모든 메시지는 'default' 채널의 데이터베이스에 저장됩니다. 여러분이 관심이 있으시다면, 생존자를 "Camp" 별로 분류하여 메시지를 주고 받는 시스템을 개선할 수 있습니다. 현재 'channel' 속성의 값을 변경함으로서 해보실 수 있습니다. 
+* 추가 도전 과제: 본 워크샵에서는 생존자의 모든 메시지는 'default' 채널의 데이터베이스에 저장됩니다. 여러분이 관심이 있으시다면, 생존자를 "Camp" 별로 분류하여 메시지를 주고 받는 시스템을 개선할 수 있습니다. 현재 'channel' 속성의 값을 변경함으로서 해보실 수 있습니다.
