@@ -323,7 +323,8 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 1\. Twilio 회원 가입을 합니다.  https://www.twilio.com/try-twilio. (계정이 있으시면 https://www.twilio.com 에서 로그인합니다.)
 
 2\. 가입이 완료되었으면, 로그인을 한 후 오른쪽 홈 아이콘을 눌러 콘솔 대시 보드 페이지로 갑니다. 맨 밑으로 스크롤을 내려  **Phone Numbers** 항목에서 "Phone Numbers"를 선택합니다.
-![Manage Twilio Phone Number](/Images/Twilio-Step1.png)(/Images/Twilio-Step2.png)
+![Manage Twilio Phone Number](/Images/Twilio-Step1.png)
+![Manage Twilio Phone Number](/Images/Twilio-Step2.png)
 
 3\. 전화 번호 부분의 "Get Started"를 눌러, 계정에 전화 번호를 연결합니다.  붉은색의 "Get your first Twilio phone number" 버튼을 누르면, 우리가 실습에서 사용할 10자리의 전화 번호를 생성합니다. 기본적으로 음성 및 메시지가 가능해야 하기 때문에, 전화 번호에 대해 팝업창이 열리면 메시지 사용을 할 수 있게 설정하고 "Choose this number"를 선택하고, 다음 단계로 갑니다. 만약 전화 번호가 메시징을 지원하지 않으면, "Search for a different number"를 누르고, 국가 및 "SMS"를 선택한 후, "Search"를 합니다. Twilio는 전화 번호 목록을 제공하고, 이 중에서 번호를 선택하고 "Choose number"를 한 후, 간단하게 주소를 입력하고 "Save and continue" 및 "Done"을 설정합니다.
 
