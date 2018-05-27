@@ -602,26 +602,26 @@ Twilio lab에서 했던 대로, JSON 으로 요청을 변환하기 위해 VTL �
 24\. 이제 Slack 명령어를 통해 연동이 이루어는지 테스트를 해 보면 됩니다. Slack 계정의 팀 chat 채널에서 "/survivors" 예약어와 함께 메시지를 입력합니다. 예를 들어, "/survivors 도와주세요! 좀비가 오고 있어요!"라고 입력하면, 아래와 같이 메시지 창으로도 전달이 됩니다.
 ![Slack Command Success](/Images/Slack-Step24.png)
 
-테스트 시 slack 화면에 {"errorMessage":"The incoming Slack username and team do not match any existing registered suvivors. Please ..."}와 같은 응답이 표시되고 zombie chat application에 메세지가 표시되지 않는다면 이는 zombie chat application 가입 시 입력했던 slack username, slack team domain name이 실제 slack 가입 시 입력했던 값과 일차하지 않아서 발생하는 것이다.
-이 경우 아래의 2가지 방법 중 한가지를 이용해서 설정을 변경하도록 한다.
-1) test를 위한 임시방편으로 dynamodb의 user table 정보를 갱신하도록한다(여기서 임시방편이라고 한 이유는 이렇게하더라도 logout 후 다시 login하면 dynamodb user table이 원래대로 돌아가기 때문인데 이는 cognito에 등록된 Pre authentication trigger에 의해 수행되는 lambda 때문이다. 이는 본 실습의 sample application 환경과 관련된 사항이므로 본 실습에서 더 자세한 설명은 생략한다.). 우선 slack에 등록된 값을 확인하기 위해서 아래와 같이 수행한다. 현재 slack 화면의 url은 https://<team domain name>.slack.com 형식이므로 이를 통해서 slack team domain name을 구한다. slack user name을 구하기 위해서 아래와 같이 수행한다. 좌상단의 display name을 click 한 후 아래와 같이 메뉴가 펼쳐지면 Profile & account를 click한다.
+테스트 시 slack 화면에 {"errorMessage":"The incoming Slack username and team do not match any existing registered suvivors. Please ..."}와 같은 응답이 표시되고 zombie chat application에 메세지가 표시되지 않는다면 이는 zombie chat application 가입 시 입력했던 slack username, slack team domain name이 실제 slack 가입 시 입력했던 값과 일치하지 않아서 발생하는 것입니다.
+이 경우 아래의 2가지 방법 중 한가지를 이용해서 설정을 변경하도록 합니다.
+1) test를 위한 임시방편으로 dynamodb의 user table 정보를 갱신하도록합니다(여기서 임시방편이라고 한 이유는 이렇게하더라도 logout 후 다시 login하면 dynamodb user table이 원래대로 돌아가기 때문인데 이는 cognito에 등록된 Pre authentication trigger에 의해 수행되는 lambda 때문입니다. 이는 본 실습의 sample application 환경과 관련된 사항이므로 본 실습에서 더 자세한 설명은 생략합니다.). 우선 slack에 등록된 값을 확인하기 위해서 아래와 같이 수행한다. 현재 slack 화면의 url은 https://<team domain name>.slack.com 형식이므로 이를 통해서 slack team domain name을 구합니다. slack user name을 구하기 위해서 아래와 같이 수행합니다. 좌상단의 display name을 click 한 후 아래와 같이 메뉴가 펼쳐지면 Profile & account를 click합니다.
 
 ![Slack username](/Images/Slack-Step28.png)
 
-우측 화면의 Workspace Directory에서 톱니바퀴 아이콘을 click 한다.
+우측 화면의 Workspace Directory에서 톱니바퀴 아이콘을 click합니다.
 
 ![Slack username](/Images/Slack-Step29.png)
 
-Account 화면 제일 아래에서 Username 옆의 expand 버튼을 click 해서 username을 확인한다.
-이제 aws management console의 dynamodb 화면에서 **[Your stack name]-users** 테이블로 이동한 후, Items tab에서 해당 사용자에 대한 slackteamdomain 값과 slackuser 값을 변경한다.
-값을 변경했다면 다시 test를 수행해본다.
-(주의!) 이 방식은 zombie chat application을 logout한 후 다시 login하면 dynamodb table의 slackteamdomain, slackuser 값이 원래대로 돌아가버리므로 영구적인 변경을 해야한다면 아래의 2번 방식을 적용하도록 한다.
+Account 화면 제일 아래에서 Username 옆의 expand 버튼을 click 해서 username을 확인합니다.
+이제 aws management console의 dynamodb 화면에서 **[Your stack name]-users** 테이블로 이동한 후, Items tab에서 해당 사용자에 대한 slackteamdomain 값과 slackuser 값을 변경합니다.
+값을 변경했다면 다시 test를 수행해봅니다.
+(주의!) 이 방식은 zombie chat application을 logout한 후 다시 login하면 dynamodb table의 slackteamdomain, slackuser 값이 원래대로 돌아가버리므로 영구적인 변경을 해야한다면 아래의 2번 방식을 적용하도록 합니다.
 
-2) 위 방법은 dynamodb table의 값을 변경하는 방법이고 이 방법은 slack의 설정을 변경하는 방법이다. 우선 dynamodb **[Your stack name]-users** table의 Item tab에서 해당 user의 slackteamdomain 값과 slackuser 값을 기록해둔다. 이제 slack username을 확인하는 곳으로 이동해서 username을 확인한후 dynamodb의 값과 일치하지 않으면 이를 수정하고 Save 버튼을 click 한다(slack의 username은 하루에 2회만 변경가능하므로 변경에 주의하도록 한다.). 또한 team domain name을 변경해야 한다면 아래와 같이 수행한다. slack 화면에서 좌상단의 display name을 click한 후, 아래의 Administration을 선택한 후, 우측의 Workspace settings를 click 한다.
+2) 위 방법은 dynamodb table의 값을 변경하는 방법이고 이 방법은 slack의 설정을 변경하는 방법입니다. 우선 dynamodb **[Your stack name]-users** table의 Item tab에서 해당 user의 slackteamdomain 값과 slackuser 값을 기록해둡니다. 이제 slack username을 확인하는 곳으로 이동해서 username을 확인한후 dynamodb의 값과 일치하지 않으면 이를 수정하고 Save 버튼을 click 합니다(slack의 username은 하루에 2회만 변경가능하므로 변경에 주의하도록 합니다.). 또한 team domain name을 변경해야 한다면 아래와 같이 수행합니다. slack 화면에서 좌상단의 display name을 click한 후, 아래의 Administration을 선택한 후, 우측의 Workspace settings를 click 합니다.
 
 ![Slack team domain name](/Images/Slack-Step30.png)
 
-Settings & Permissions 화면의 아래 쪽에서 Workspace Name & URL 란 옆의 Change Workspace Name & URL 버튼을 click 한다. 이곳의 Workspace url의 앞부분에 기술하는 값이 team domain 명이므로 이 값을 dynamodb에 등록된 값으로 변경한 후, Save Changes 버튼을 click 한다. 이제 화면 좌상단의 Back to Slack 링크를 click해서 slack 화면으로 돌아온 후 다시 test를 수행해본다.
+Settings & Permissions 화면의 아래 쪽에서 Workspace Name & URL 란 옆의 Change Workspace Name & URL 버튼을 click 합니다. 이곳의 Workspace url의 앞부분에 기술하는 값이 team domain 명이므로 이 값을 dynamodb에 등록된 값으로 변경한 후, Save Changes 버튼을 click 합니다. 이제 화면 좌상단의 Back to Slack 링크를 click해서 slack 화면으로 돌아온 후 다시 test를 수행해봅니다.
 
 
 **LAB 4 실습 종료**
