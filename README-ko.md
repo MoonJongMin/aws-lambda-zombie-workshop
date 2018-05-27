@@ -197,7 +197,7 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 22\. 이제 로그인 페이지가 보이면, **Sign Up** 버튼을 눌러 회원 가입을 해야 합니다.
 
-23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 번호 validation이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예:  8882804331)를 넣으셔야 합니다. 실습을 위한 것이므로 임의의 10자리를 입력하면 됩니다. 단, 0으로 시작하는 것은 안됩니다.
+23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 format validation이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예:  1882804331)를 넣으셔야 합니다. 이 값은 Lab2의 twilio를 이용한 SMS 연동을 위한 것으로 우선 임의의 10자리를 입력하면 됩니다. 단, 0으로 시작하는 것은 안됩니다. 추후 Lab2 수행 시에 twilio에서 부여 받는 전화번호로 해당 값을 다시 갱신할 것 입니다.
 
 * **Select your Camp**: 여러분이 살고 있는 지역을 입력합니다. 본 애플리케이션에서 현재 속성은 사용되지 않지만, 향후에 추가적으로 사용할 수 있습니다. 워크샵 실습을 종료한 후 부록에 있는 별도 도전 사항을 시도해 보시기 바랍니다.
 
@@ -322,17 +322,17 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 1\. Twilio 회원 가입을 합니다.  https://www.twilio.com/try-twilio. (계정이 있으시면 https://www.twilio.com 에서 로그인합니다.)
 
-2\. 가입이 완료되었으면, 로그인을 한 후 오른쪽 홈 아이콘을 눌러 콘솔 대시 보드 페이지로 갑니다. 맨 밑으로 스크롤을 내려  **Phone Numbers** 항목에서 "Phone Numbers"를 선택합니다.
+2\. 가입이 완료되었으면, 로그인을 한 후 좌측 제일 아래 아이콘을 누른 후 펼쳐지는 메뉴의 **SUPER NETWORK** 항목에서 "Phone Numbers"를 선택합니다.
 ![Manage Twilio Phone Number](/Images/Twilio-Step1.png)
 ![Manage Twilio Phone Number](/Images/Twilio-Step2.png)
 
-3\. 전화 번호 부분의 "Get Started"를 눌러, 계정에 전화 번호를 연결합니다.  붉은색의 "Get your first Twilio phone number" 버튼을 누르면, 우리가 실습에서 사용할 10자리의 전화 번호를 생성합니다. 기본적으로 음성 및 메시지가 가능해야 하기 때문에, 전화 번호에 대해 팝업창이 열리면 메시지 사용을 할 수 있게 설정하고 "Choose this number"를 선택하고, 다음 단계로 갑니다. 만약 전화 번호가 메시징을 지원하지 않으면, "Search for a different number"를 누르고, 국가 및 "SMS"를 선택한 후, "Search"를 합니다. Twilio는 전화 번호 목록을 제공하고, 이 중에서 번호를 선택하고 "Choose number"를 한 후, 간단하게 주소를 입력하고 "Save and continue" 및 "Done"을 설정합니다.
+3\. 좌측 메뉴에서 Buy a Number 메뉴를 눌러, 실습을 위한 전화번호를 하나 등록합니다(메뉴명이 Buy a Number이나 twilio는 계정에 하나의 전화번호 구매는 과금되지 않으므로 안심하셔도 됩니다.). 실습을 위해 COUNTRY는 United States로 선택(한국, japan 번호는 SMS, MMS가 지원되지 않기 때문에 실습을 위해서 미국을 선택합니다.)하고 CAPABILITIES에 SMS를 선택(문자 발송 시 api gateway로 http 요청을 보내야 하므로)한 후 Search 버튼을 누릅니다. 나오는 list 중 하나에 대해서 우측의 Buy 버튼을 눌러서 선택합니다(twilio 화면의 usage에 $1과 같이 보이지만 included in your free trial이므로 과금되지 않습니다. https://support.twilio.com/hc/en-us/articles/223135587-I-haven-t-upgraded-why-are-there-charges-on-my-Usage-page).
 
 *대부분은 미국 번호입니다. 해외 번호를 받으실 수도 있습니다만 서비스 약관 상 비용 부가가 있을 수 있습니다. 자세한 것은 웹 사이트를 참고하시기 바랍니다.*
 
 4\. 일단 전화 번호를 받게 되면, 왼쪽에 **Manage Numbers** 버튼을 눌러 번호의 속성 정보를 얻기 위해 전화 번호를 클릭합니다.
 
-5\. 아래로 스크롤을 내려 보면, **Messaging** 영역의 **Configure With** 드롭다운 항목에서 **Webhooks/TwiML** 옵션을 선택합니다. 일단, 웹 페이지를 그대로 두고 다음 단계로 넘어갑니다.
+5\. 아래로 스크롤을 내려 보면, **Messaging** 영역의 **Configure With** 드롭다운 항목에서 **Webhooks, TwiML Bins, ...** 옵션을 선택합니다. 일단, twilio 웹 페이지를 이 상태 그대로 두고 다음 단계로 넘어갑니다.
 
 * Twilio webhooks을 이용하면 여러분의 전화 번호를 서드파티 서비스와 연동할 수 있습니다. 오늘 실습에서는 전화 번호로 오는 모든 메시지를 API Gateway의 POST HTTP 호출을 통해 보내는 것을 진행합니다.   
 
@@ -342,45 +342,45 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 7\. API Gateway 콘솔에서 **Zombie Workshop API Gateway** API를 선택한 후, 왼쪽에 **Stages**를 클릭합니다.
 ![API Gateway Resources Page](/Images/Twilio-Step7.png)
 
-8\. "Stages"를 선택하여, 파란 화살표를 눌러 "Zombie Workshop Stage"를 보이게 합니다. 이제 **/zombie/twilio**의  **POST** 메소드를 선택합니다. **/zombie/twilio** 리소스는 CloudFormation이 SMS 연동을 위해 만든 리소스입니다. 아래와 같이 **/zombie/twilio** 에 대한 **Invoke URL**이 표시 됩니다.
+8\. "Stages"에서, "ZombieWorkshopStage"의 좌측 파란 화살펴를 눌러 하위 메뉴가 보이게 합니다. 이제 **/zombie/twilio**의  **POST** 메소드를 선택합니다. **/zombie/twilio** 리소스는 CloudFormation이 SMS 연동을 위해 만든 리소스입니다. 아래와 같이 **/zombie/twilio** 에 대한 **Invoke URL**이 표시 됩니다.
 ![API Gateway Invoke URL](/Images/Twilio-Step8.png)
 
-9\. **Invoke URL**을 복사 한 후, Twilio 웹 페이지로 되돌아 입니다. 복사한 URL 주소를 **A message comes in**라는 텍스트 박스에 붙여 넣습니다. 그런 다음, 아래와 같이 호출 타입을 **HTTP POST**로 선택합니다.
+9\. **Invoke URL**을 복사 한 후, Twilio 웹 페이지로 되돌아 입니다. 복사한 URL 주소를 **A MESSAGE COMES IN** 텍스트 박스에 붙여 넣습니다. 그런 다음, 아래와 같이 호출 타입을 **HTTP POST**로 선택합니다.
 ![Twilio Request URL](/Images/Twilio-Step9.png)
 
-10\. 마지막 설정을 위해 **Save** 버튼을 누리면, Twilio API와 연결 설정이 끝납니다.
+10\. 마지막 설정을 위해 **Save** 버튼을 누르면, Twilio API와 연결 설정이 끝납니다.
 
 11\. 이제 Twilio로 부터 들어오는 메시지를 받아서, 파싱한 다음 "/messages" 채팅 서비스로 보내는 작업을 할 Lambda 함수를 만들어 보겠습니다. 이제 AWS Lambda 관리 콘솔로 들어갑니다.
 
 * 워크샵을 진행하면서 느끼시다시피, /zombie/message 리소스에 표준화된 호출을 보내기 전에 데이터를 전처리하는 Lambda 함수를 항상 만들고 있습니다. 이를 통해 여러 함수를 만들어 DB 작업을 하는 대신 기존 DynamoDB 로직을 재활용할 수 있습니다. Twilio 번호로 메시지가 들어오면 Twilio Webwook이 /zombie/twilio 리소스로 POST를 보내고, 백엔드 데이터 처리 Lambda 함수와 연결됩니다. 이 함수는 Twilio 데이터를 분리해서 IAM 권한이 필요한 /zombie/message/로 SigV4 HTTPS 호출 데이터를 만듭니다.
 
-12\. **Create a Lambda function**를 선택한 후, 왼쪽 메뉴에서 **Configure function**을 선택합니다.
+12\. AWS Management console의 Lambda에서 **Create function**를 선택합니다.
 
-13\. 이제 함수명에는 **"[Your CloudFormation stack name]-TwilioProcessing"**라고 적고, "Runtime"은 **Node.js 4.3**을 선택합니다. 이제 Github 레포지터리에서 **TwilioProcessing.js** 파일을 찾아서 전체 코드를 복사한 후, Lambda 코드 에디터에 붙여넣습니다. 코드 중에서 [line 8](/Twilio/TwilioProcessing.js#L8)에는 몇 가지 "API" 환경 변수들을 선언해야 합니다. API.endpoint는 "INSERT YOUR API GATEWAY URL HERE INCLUDING THE HTTPS://"라고 적혀 있는데, 여기에 API Gateway의 전체 도메인 명을 넣습니다. 예를 들어, "https://xxxxxxxx.execute-api.us-west-2.amazonaws.com"의 형식입니다.
+13\. Name에는 **"[Your CloudFormation stack name]-TwilioProcessing"**라고 적고, "Runtime"은 **Node.js 6.10**을 선택합니다. Role 항목에서 **Choose an existing role**를 선택하고, 아래의 Existing role에서 **[Your stack name]-ZombieLabLambdaRole...**를 선택 합니다. 그리고 Create function 버튼을 눌러 lambda 함수를 생성합니다.
 
-**API.region**에는 리전 코드도 넣어야 합니다. CloudFormation을 실행한 리전의 코드를 넣습니다. (예: us-west-2)
+14\. 이제 Github 레포지터리에서 **TwilioProcessing.js** 파일을 찾아서 전체 코드를 복사한 후, Lambda 코드 에디터에 붙여넣습니다. 코드 중에서 [line 8](/Twilio/TwilioProcessing.js#L8)에는 몇 가지 "API" 환경 변수들을 선언해야 합니다. 11라인의 API.endpoint는 "INSERT YOUR API GATEWAY URL HERE INCLUDING THE HTTPS://"라고 적혀 있는데, 여기에 API Gateway의 전체 도메인 명을 넣습니다. 예를 들어, "https://xxxxxxxx.execute-api.us-west-2.amazonaws.com"의 형식입니다.
 
-마지막으로 DynamoDB 사용자 테이블의 이름을 복사합니다. 이 값은 **table** 변수에 넣습니다. 또한, "phoneindex" (쿼리와 함께 DynamoDB에 생성되는 인덱스) 이름도 복사합니다. 이들 속성은 CoudFormation "Output" 탭에서 모두 얻을 수 있습니다. CloudFormation의 **DynamoDBUsersTableName** 및 **DynamoDBUsersPhoneIndex** 에서 복사하면 됩니다.
+**10라인 API.region**에는 리전 코드도 넣어야 합니다. CloudFormation을 실행한 리전의 코드를 넣습니다. (예: ap-northeast-2)
 
-* 본 워크샵의 대부분 함수는 Nodejs 0.10으로 작성되었으나, Node 버전과 상관없이 동작합니다. 향후에 NodeJS 4.3에 맞는 코드로 업그레이드 할 예정입니다.
+마지막으로 DynamoDB 사용자 테이블의 이름을 복사합니다. 이 값은 14라인의 **table** 변수에 넣습니다. 또한, "phoneindex" (쿼리와 함께 DynamoDB에 생성되는 인덱스) 이름도 복사해서 15라인에 넣도록합니다. 이들 속성은 CoudFormation "Output" 탭에서 모두 얻을 수 있습니다. CloudFormation의 **DynamoDBUsersTableName** 및 **DynamoDBUsersPhoneIndex** 항목의 값을 복사하면 됩니다.
 
-14\. Lambda 함수 코드 붙여 넣기 및 속성값 설정이 끝났으면, **Lambda function handler and role** 항목에서 **Choose an existing role**를 선택하고, 드롭 다운 메뉴에서 기존의 **Role** 중에 **[Your stack name]-ZombieLabLambdaRole...**를 선택 합니다.
+* 본 워크샵의 대부분 함수는 Nodejs 0.10으로 작성되었으나, Node 버전과 상관없이 동작합니다.
 
-15\. **timeout** 에는 30초를 넣고, 나머지 값들은 그대로 둡니다. 이제 **Next**를 눌러, 리뷰 페이지에서 **Create function**을 선택하여, 함수 작성을 완료합니다.
+15\. Lambda 함수 설정화면 아래의 Basic settings에서 **timeout** 에는 30초를 넣고, 나머지 값들은 그대로 둡니다. 이제 우측 상단의 **Save** 버튼을 눌러, 함수 작성을 완료합니다.
 
 * 이 Lambda 함수는 /twilio 엔드포인트로 들어오는 퀴리스트링을 받아서 채팅 서비스로 보낼 수 있는 형식의 JSON으로 변환하여 이를 /zombie/message 엔드포인트로 보내는 처리를 합니다. 여기서 DynamoDB에 데이터를 넣게 됩니다.
 
-16\. 이제 /zombie/twilio 엔드포인트에 **POST** 메소드를 처리하는 설정을 합니다. API Gateway 콘솔에서 **/twilio** 엔드포인트 아래 **POST**를 선택합니다.
+16\. 이제 /zombie/twilio 엔드포인트에 **POST** 메소드를 처리하는 설정을 합니다. API Gateway 콘솔에서 좌측 Resources 메뉴 선택 후, **/twilio** 엔드포인트 아래 **POST**를 선택합니다.
 
 17\. **Method Execution** 스크린의 "POST" 메소드에서 "Integration Request" 박스가 /twilio 리소스에 대해 **MOCK**의 형식으로 보여야 합니다.
 
 18\. Lambda 함수와 Mock integration을 하기 위해서는 **Integration Request**를 바꾸어야 합니다. **Integration Request**을 클릭 한후, 화면에서 "Integration type" 라디오 버튼을 **Lambda Function**로 선택합니다. "Lambda Region"에서 드롭다운을 해서 CloudFormation 작업 및 TwilioProcessing Lambda 함수를 만든 리전을 선택합니다. **Lambda Function** 이름에서는 "TwilioProcessing"를 치면, 우리가 만든 함수가 자동완성됩니다. **TwilioProcessing** 함수를 선택 한 후, **Save** 버튼을 누립니다. 팝업창에서 Lambda 함수 연계에 대해 **OK**를 누릅니다. 그런 다음, API Gateway 접근 권한에 대해 확인을 하고 **OK**를 누릅니다. 몇 초 정도 지나면 완료됩니다.
 
-19\. **Save**을 누른 후, "POST" 메소드에 대한 Method Execution 페이지로 옵니다. 맵핑 템플릿을 설정하기 위해  **Integration Request**를 합니다. Method Execution 화면에서 **Integration Request**를 누릅니다.
+19\. 완료되었으면 화면 상단의 "Method Execution" 링크를 click해서 Method Execution 페이지로 옵니다. 맵핑 템플릿을 설정하기 위해 Method Execution 화면에서 **Integration Request**를 누릅니다.
 
-20\. Twilio는 API로 부터 "application/x-www-form-urlencoded"의 content-type을 보냅니다. Lambda 함수는 content-type이 "application/json"로 받게 되기 때문에, Lambda TwilioProcessing를 실행하기 전에 API로 들어오는 데이터를 JSON으로 변환해야 합니다.
+20\. Twilio는 API로 부터 "application/x-www-form-urlencoded"의 content-type을 보냅니다. 그러나 Lambda 함수는 content-type을 "application/json"로 받아야 되기 때문에, Lambda TwilioProcessing를 실행하기 전에 API로 들어오는 데이터를 JSON으로 변환해야 합니다.
 
-21\. /twilio POST 메소드의 Integration Request화면에서 **Body Mapping Templates**을 열어 **Add mapping template**을 누릅니다. "Content-Type" 텍스트 박스에는 **application/x-www-form-urlencoded**를 누르고, 작은 체크박스를 눌러 계속합니다. 체크 박스를 누르면, 팝업 창이 떠서 정확한 Content-Type을 입력했는지 확인 창이 나오는데, 이 때  **Yes, secure this integration**를 누릅니다. **Generate Template** 드롭다운과 함께 오른쪽에 새로운 영역이 보입니다. 드롭다운 메뉴를 눌러 **Method Request Passthrough**를 선택합니다.
+21\. /twilio POST 메소드의 Integration Request화면에서 **Body Mapping Templates**를 펼친 후 **Add mapping template**을 누릅니다. "Content-Type" 텍스트 박스에는 **application/x-www-form-urlencoded**를 입력하고, 작은 체크박스를 눌러 계속합니다. 체크 박스를 누르면, 팝업 창이 떠서 정확한 Content-Type을 입력했는지 확인 창이 나오는데, 이 때  **Yes, secure this integration**를 누릅니다. 그러면 **Generate Template** 드롭다운과 함께 새로운 영역이 보입니다. 드롭다운 메뉴를 눌러 **Method Request Passthrough**를 선택합니다.
 
 22\. "Template" 텍스트 편집기가 나오게 되는데, 여기에는 들어오는 Twilio 데이터를 JSON 객체로 바꾸는 VTL 변환 로직의 일부분을 입력하게 됩니다. 편집기에서 **기존에 적혀 있는 코드를 삭제**하고 아래 코드를 입력합니다.
 
@@ -393,11 +393,11 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 23\. Twilio API는 응답 받는 Content-Type을 XML로 받아야 하기 때문에 응답 데이터 변환을 위해 Integration Response 설정을 해야 합니다. SMS 메시지를 받아 채팅 서비스로 보내고 나서, 메시지를 잘 받았다고 Twilio에 응답 결과를 보내야 하기 때문에 필요합니다.
 
-24\. twilio POST 메소드의 Method Execution 화면으로 갑니다. 여기서 **Integration Response**를 누릅니다.  "Integration Response"에서 메소드 응답 영역을 보이게 하기 위해 검은 화살표를 누릅니다.  **Body Mapping Templates** 영역을 확장하면, Content-Type이 "application/json"라고 보입니다. Content-Type을 XML로 바꾸기 위해 먼저 **까만 마이너스(-) 아이콘**을 눌러 Content-Type을 지우고, 팝업창에서 **Delete**를 선택합니다.
+24\. Twilio POST 메소드의 Method Execution 화면으로 갑니다. 여기서 **Integration Response**를 누릅니다.  "Integration Response"에서 메소드 응답 영역을 보이게 하기 위해 검은 화살표를 누릅니다.  그리고 **Body Mapping Templates** 영역을 확장하면, Content-Type이 "application/json"라고 보입니다. Content-Type을 XML로 바꾸기 위해 먼저 **까만 마이너스(-) 아이콘**을 눌러 Content-Type을 지우고, 팝업창에서 **Delete**를 선택합니다.
 
 25\. **Add mapping template**을 눌러 이전에 했던 Integration Request에서 했던 방식과 유사하게 진행합니다.
 
-26\. 즉, "Content-Type"에는 **application/xml**라고 입력하고, 작은 체크 박스를 눌러 계속 진행합니다. 앞에서와 같이 JSON 데이터를 XML로 변환하는 VTL 매핑 로직을 복사합니다. 이를 통해 /twilio POST 메소드에 대해 응답은 XML 포맷으로 하게 됩니다.  새 content-type을 만들고 나면, 오른쪽에 **Generate Template**을 위한 드롭다운 영역이 나오면, 드롭다운을 눌러 **Method Request Passthrough**를 선택합니다.
+26\. 즉, "Content-Type"에는 **application/xml**라고 입력하고, 작은 체크 박스를 눌러 계속 진행합니다. 앞에서와 같이 JSON 데이터를 XML로 변환하는 VTL 매핑 로직을 기술해야합니다. 이를 통해 /twilio POST 메소드에 대해 응답은 XML 포맷으로 하게 됩니다.  새 content-type을 만들고 나면, 오른쪽에 **Generate Template**을 위한 드롭다운 영역이 나오면, 드롭다운을 눌러 **Method Request Passthrough**를 선택합니다.
 텍스트 에디터에서는 기존 코드를 지우고 아래 코드를 복사해서 붙여넣습니다.
 
 ```
@@ -415,9 +415,27 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 회색 "Save" 버튼을 누릅니다. 결과는 아래와 같이 화면에 보이게 됩니다.
 ![Twilio Integration Response Mapping Template](/Images/Twilio-Step26.png)
 
-27\. 이제 스크롤을 위래 올려서 푸른색 **Save** 버튼을 누립니다. 마지막으로 API Gateway 콘솔의 왼쪽의 **Actions** 버튼을 누르고, API 배포를 위해 **Deploy API**를 선택합니다. API 배포 창에서는 드롭다운에서 **ZombieWorkshopStage**를 선택한후, **Deploy**를 누릅니다.
+27\. 이제 스크롤을 위로 올려서 푸른색 **Save** 버튼을 누립니다. 마지막으로 API Gateway 콘솔의 왼쪽의 **Actions** 버튼을 누르고, API 배포를 위해 **Deploy API**를 선택합니다. API 배포 창에서는 드롭다운에서 **ZombieWorkshopStage**를 선택한후, **Deploy**를 누릅니다.
 
-28\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. Twilio 전화 번호로 이제 문자 메시지를 보내시면, 채팅창에 전달이됩니다. (주의: 미국 번호인 경우, SMS 전송 비용이 발생할 수 있습니다. 메시지를 보낼 때는, 국제 문자 보내는 것과 같이 +를 누르고 보내시면 됩니다. 또한, 채팅 애플리케이션은 여러분의 진짜 전화 번호인지를 필터링 합니다. 따라서, DynamoDB의 사용자 테이블의 전화 번호를 바꾸실 필요가 있습니다. DynamoDB 콘솔 화면에서, 왼쪽 메뉴의 Table을 선택 하신 후, **[Your-stack-name]-users** 테이블을 선택하고, **Items** 탭을 선택 합니다. 등록한 아이디의 전화번호(미국 번호)를 여러분의 휴대폰 번호로 수정하려면, phone 필드를 선택해 연필 아이콘을 눌러 수정하실 수 있습니다. 문자 메시지 내용이 도착하지 않는 경우, 로그아웃 후 다시 로그인 해보시기 바랍니다.)
+28\. zombie chat application은 /zombie/twilio가 호출될 경우 lambda에서 dynamodb table에 등록된 사용자의 phone 정보와 비교해서 유효한 사용자가 보낸 메세지만 처리하도록 검증합니다. 따라서 최초 zombie chat 회원가입 시 등록한 전화번호가 twilio 실습을 위해 부여받은 전화번호와 일치해야 합니다. 이를 위해서 Dynamodb table "[Your CloudFormation stack name]-users"을 열어 Items 탭에서 해당 사용자의 phone 번호를 twilio에서 부여받은 번호로 갱신합니다. 이 때, "+12223334444"와 같이 +로 시작하고 - 없이 붙여서 등록하도록 합니다.
+
+29\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. 하지만 현재 상태로는 test가 되지 않을 것입니다. Twilio의 정책 변경으로 인해 trial 상태에서 부여 받은 전화번호로 문자 발송 시 허용 발신자 번호로 등록된 번호가 아닌 경우 twilio에서 문자를 수신하지 않기 때문입니다. Twilio 유로 사용 번호라면 이러한 제약이 없습니다. 실습을 위해 부득이 아래와 같은 방식으로 test를 진행하도록 합니다. 우선 구분을 위해서 앞에서 등록했던 twilio를 수신용 twilio라고 하겠습니다. 무료로 미국 전화번호로 문자 메세지 발송을 하기 위해서 송신용 twilio를 하나 더 생성합니다. 기존 수신 용 twilio와 다른 email을 이용해서 twilio 가입을 하나 더 진행합니다. 앞에서 수신용 twilio와 동일한 방법으로 SMS가 가능한 전화번호를 미국에 생성합니다(본 Lab 가이드 2~4 번 참고). 이제 송신용 전화번호를 기록한 후, 수신용 twilio에 로그인 합니다. 이곳에서 phone numbers 화면의 좌측메뉴에서 Verified Caller IDs를 클릭합니다.
+![Twilio Verified Caller IDs](/Images/Twilio-Step27.png)
+화면에서 동그란 + 버튼을 누르면 아래와 같은 창이 뜨는데 이곳에서 아래의 "text you instead" 링크를 click 합니다.
+![Twilio Verified Caller IDs](/Images/Twilio-Step28.png)
+그 후, 새로 생성한 송신용 twilio 전화번호를 입력한 후 Text Me 버튼을 click 합니다. 그러면 아래와 같이 verification code를 입력하라는 화면이 나옵니다.
+![Twilio Verified Caller IDs](/Images/Twilio-Step29.png)
+이제 송신용 twilio 화면으로 이동해서 Programmable SMS 메뉴로 이동한 후, View all Message Logs를 click합니다.
+![Twilio Verified Caller IDs](/Images/Twilio-Step30.png)
+이곳에서 수신용 twilio에서 전송한 verification code를 확인한 후, 수신용 twilio 화면의 verification code에 입력 후, Submit 버튼을 눌러서 verified caller id에 등록합니다.
+
+**(주의)** 송신용 twilio에는 **Messaging** 영역의 **Configure With** 드롭다운 항목에서 **Webhooks, TwiML Bins, ...** 옵션의 **A MESSAGE COMES IN**에 api gateway endpoint를 기술해서는 안됩니다. 이 값은 반드시 수신용 twilio에만 등록되어 있어야 합니다. twilio는 SMS 수신 시 발신 전화번호로 SMS를 잘 받았다는 응답 SMS를 자동으로 보내기 때문에 송신 twilio에도 api gateway endpoint가 등록되어 있게되면 api gateway가 반복적으로 호출이 되는 현상이 발생하게 됩니다.
+
+30\. 이제 송신 Twilio에서 수신 Twilio 전화 번호로 이제 문자 메시지를 보내시면, 채팅창에 전달이됩니다. 송신 twilio에서 SMS를 보내기 위해서 좌측 메뉴의 "Programmable SMS"를 선택하고, Learn & Build를 click하면 아래와 같은 화면이 보입니다.
+![Sending SMS via twilio](/Images/Twilio-Step31.png)
+TO란에 수신 twilio의 전화번호를 입력합니다. +12223334444 와 같은 형식으로 입력합니다. BODY란에 전달하고자 하는 내용을 입력한 후, 아래의 Make Request 버튼을 click 합니다. 모든 설정이 정상이라면 잠시 후 zombie chat application 화면에서 메세지를 확인할 수 있습니다.
+![Receiving SMS via twilio](/Images/Twilio-Step32.png)
+혹시 문자 메시지 내용이 도착하지 않는 경우, 로그아웃 후 다시 로그인 해보시기 바랍니다. 그래도 되지 않을 경우, 위 설정을 다시 확인하시기 바랍니다.
 
 **LAB 2 실습 종료**
 
