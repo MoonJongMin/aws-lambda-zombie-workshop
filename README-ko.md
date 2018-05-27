@@ -421,20 +421,26 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 29\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. 하지만 현재 상태로는 test가 되지 않을 것입니다. Twilio의 정책 변경으로 인해 trial 상태에서 부여 받은 전화번호로 문자 발송 시 허용 발신자 번호로 등록된 번호가 아닌 경우 twilio에서 문자를 수신하지 않기 때문입니다. Twilio 유로 사용 번호라면 이러한 제약이 없습니다. 실습을 위해 부득이 아래와 같은 방식으로 test를 진행하도록 합니다. 우선 구분을 위해서 앞에서 등록했던 twilio를 수신용 twilio라고 하겠습니다. 무료로 미국 전화번호로 문자 메세지 발송을 하기 위해서 송신용 twilio를 하나 더 생성합니다. 기존 수신 용 twilio와 다른 email을 이용해서 twilio 가입을 하나 더 진행합니다. 앞에서 수신용 twilio와 동일한 방법으로 SMS가 가능한 전화번호를 미국에 생성합니다(본 Lab 가이드 2~4 번 참고). 이제 송신용 전화번호를 기록한 후, 수신용 twilio에 로그인 합니다. 이곳에서 phone numbers 화면의 좌측메뉴에서 Verified Caller IDs를 클릭합니다.
 ![Twilio Verified Caller IDs](/Images/Twilio-Step27.png)
+
 화면에서 동그란 + 버튼을 누르면 아래와 같은 창이 뜨는데 이곳에서 아래의 "text you instead" 링크를 click 합니다.
 ![Twilio Verified Caller IDs](/Images/Twilio-Step28.png)
+
 그 후, 새로 생성한 송신용 twilio 전화번호를 입력한 후 Text Me 버튼을 click 합니다. 그러면 아래와 같이 verification code를 입력하라는 화면이 나옵니다.
 ![Twilio Verified Caller IDs](/Images/Twilio-Step29.png)
+
 이제 송신용 twilio 화면으로 이동해서 Programmable SMS 메뉴로 이동한 후, View all Message Logs를 click합니다.
 ![Twilio Verified Caller IDs](/Images/Twilio-Step30.png)
+
 이곳에서 수신용 twilio에서 전송한 verification code를 확인한 후, 수신용 twilio 화면의 verification code에 입력 후, Submit 버튼을 눌러서 verified caller id에 등록합니다.
 
 **(주의)** 송신용 twilio에는 **Messaging** 영역의 **Configure With** 드롭다운 항목에서 **Webhooks, TwiML Bins, ...** 옵션의 **A MESSAGE COMES IN**에 api gateway endpoint를 기술해서는 안됩니다. 이 값은 반드시 수신용 twilio에만 등록되어 있어야 합니다. twilio는 SMS 수신 시 발신 전화번호로 SMS를 잘 받았다는 응답 SMS를 자동으로 보내기 때문에 송신 twilio에도 api gateway endpoint가 등록되어 있게되면 api gateway가 반복적으로 호출이 되는 현상이 발생하게 됩니다.
 
 30\. 이제 송신 Twilio에서 수신 Twilio 전화 번호로 이제 문자 메시지를 보내시면, 채팅창에 전달이됩니다. 송신 twilio에서 SMS를 보내기 위해서 좌측 메뉴의 "Programmable SMS"를 선택하고, Learn & Build를 click하면 아래와 같은 화면이 보입니다.
 ![Sending SMS via twilio](/Images/Twilio-Step31.png)
+
 TO란에 수신 twilio의 전화번호를 입력합니다. +12223334444 와 같은 형식으로 입력합니다. BODY란에 전달하고자 하는 내용을 입력한 후, 아래의 Make Request 버튼을 click 합니다. 모든 설정이 정상이라면 잠시 후 zombie chat application 화면에서 메세지를 확인할 수 있습니다.
 ![Receiving SMS via twilio](/Images/Twilio-Step32.png)
+
 혹시 문자 메시지 내용이 도착하지 않는 경우, 로그아웃 후 다시 로그인 해보시기 바랍니다. 그래도 되지 않을 경우, 위 설정을 다시 확인하시기 바랍니다.
 
 **LAB 2 실습 종료**
