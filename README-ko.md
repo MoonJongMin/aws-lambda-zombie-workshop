@@ -466,46 +466,51 @@ TO란에 수신 twilio의 전화번호를 입력합니다. +12223334444 와 같�
 
 1\. 관리 콘솔에서 Amazon Elasticsearch 아이콘을 선택합니다.
 
-2\. 새 Amazon Elasticsearch Domain을 선택 한후, "[Your CloudFormation stack name]-zombiemessages"와 유사하게 이름을 입력하고 **Next**를 선택합니다.
+2\. "Create a new domain" 버튼 click 후, Elasticsearch domain name에 "[Your CloudFormation stack name]-zombiemessages"와 유사하게 이름을 입력하고 **Next**를 선택합니다.
 
-3\. **Configure Cluster** 페이지에서는 기본 설정 값을 그대로 두고 **Next**를 누릅니다. (서울 리전에서는 EBS를 선택)
+3\. **Configure Cluster** 페이지에서는 기본 설정 값을 그대로 두고 **Next**를 누릅니다. (서울 리전에서는 Storage type을 EBS를 선택)
 
-4\. 접근 정책 페이지에서는 드롭 다운의 **Allow or deny access to one or more AWS accounts or IAM users** 옵션을 선택하고 여러분의 계정 ID를 입력합니다. 위의 AWS Account ID를 복사해서 입력하면 됩니다. Effect를 **Allow**로 선택한 상태에서 **OK**를 누릅니다.
+4\. Set up access 페이지의 Network configuration에서 Public access 라디오 버튼을 선택하고, Access policy에서 Set the domain access policy to 드롭 다운에 **Allow or deny access to one or more AWS accounts or IAM users** 옵션을 선택하고 Account ID or ARN에 여러분의 계정 ID를 입력합니다. 위의 AWS Account ID를 복사해서 입력하면 됩니다. Effect를 **Allow**로 선택한 상태에서 **OK**를 누릅니다.
 
 5\. **Next**를 눌러 Review 페이지로 갑니다.
 
-6\. Review 페이지에서 **Confirm and create**를 눌러 클러스터를 생성합니다.
+6\. Review 페이지에서 **Confirm** 버튼을 눌러 클러스터를 생성합니다.
 
 7\. Elasticsearch 클러스터 생성에는 약 10분 정도가 소요됩니다.
 
 * 기다리는 동안 잠시 휴식을 취하시거나 아니면 Lab 4로 가셔서 진행을 하시다 돌아오셔도 됩니다.
 
-8\. 클러스터 생성이 완료 되면 엔드 포인트를  복사합니다. 뒤에 Lambda 함수에서 필요한 정보입니다.
+8\. 클러스터 생성이 완료 되면 엔드 포인트를 복사합니다. 뒤에 Lambda 함수에서 필요한 정보입니다.
 ![API Gateway Invoke URL](/Images/Search-Step8.png)
 
 9\. 관리 콘솔에서 Lambda 아이콘을 눌러 Lambda 서비스로 들어갑니다.
 
-10\. **Create a Lambda Function**를 선택합니다.
+10\. **Create Function** 버튼을 click 합니다.
 
-11\. **Blank Function 박스**를 선택합니다..
+11\. **Name** 항목에 **"[Your CloudFormation stack name]-ESsearch"**와 같이 넣으시고 Runtime은 Node.js 6.10을 선택합니다. Role에서 **Create new Role from template(s)**을 선택한 후, Role name에 **"[Your CloudFormation stack name]-ZombieLabLambdaDynamoESRole"** 처럼 이름을 넣고 Policy templates에는 **Elasticsearch permissions** Role Template를 선택합니다. 이제 Create function 버튼을 눌러 lambda 함수를 생성합니다.
 
-12\. **Configure Triggers** 설정 부분에서는 DynamoDB를 선택하고, **messages**라는 DynamoDB table을 선택합니다. 아마 **"[Your CloudFormation stack name]-messages"**로 보일 것입니다. **Batch size**를 **5**로 설정하고, **Starting position**을 **Lastest**로 선택하고, **Enable trigger** 체크박스를 선택합니다.이제 "Next" 버튼을 누릅니다.  
+12\. 이번에 구현할 lambda 함수는 DynamoDB table에서 메세지를 주기적으로 읽어서 실행되는 구조입니다. 이를 위해서는 앞에서 생성한 **"[Your CloudFormation stack name]-ZombieLabLambdaDynamoESRole"** role이 Dynamodb에 접근 가능한 권한이 있어야 합니다. 앞에서 Template으로 추가한 Elasticsearch permissions에는 Elasticsearch에 데이타를 넣는 권한만 부여된 상태이므로 별도로 권한을 부여하도록 합니다. 이를 위해서 AWS의 IAM 서비스로 이동합니다(기존의 lambda 설정은 그대로 두고 browser tab을 하나 더 열어서 이동하는 것이 편리합니다.).
+![Lambda IAM Role](/Images/ElasticsearchService-LambdaIAMRole.png)
 
-13\. 함수명은 **"[Your CloudFormation stack name]-ESsearch"**와 같이 넣으시고, Runtime은 Node.js 4.3를 선택합니다. 설명은 간단히 원하는대로 입력하셔도 됩니다.
+좌측 메뉴에서 Roles를 선택하고 화면에서 앞에서 생성한 **"[Your CloudFormation stack name]-ZombieLabLambdaDynamoESRole"** role을 찾아서 click 합니다. 화면의 우측 하단부에 보이는 "Add inline policy" 링크를 click 합니다. 화면의 "Visual editor" 탭에서 Service를 click 한 후, DynamoDB라고 입력한 후 나오는 검색 결과에서 DynamoDB를 선택합니다. Actions 항목의 Access level에서 Read 옆에 체크합니다(lambda에서 dynamodb의 데이타를 읽기만 하면되므로 Read만 선택합니다.). 아래의 Resources를 click해서 All resources를 선택합니다. 화면 우측 아래의 "Review policy" 버튼을 click 합니다.
+![Lambda IAM Role](/Images/ElasticsearchService-LambdaIAMRole2.png)
 
-14\. 이제 Github의 "ElasticsearchLambda" 폴더에 있는 ZombieWorkshopSearchIndexing.js 파일을 복사하여 Lambda 함수를 만듭니다.
+Review policy 화면의 Name에 적절한 이름을 부여합니다. 본 실습에서는 DynamoDB-Read 라고 입력합니다. "Create policy" 버튼을 눌러 생성을 완료합니다. 이제 **"[Your CloudFormation stack name]-ZombieLabLambdaDynamoESRole"** role에 dynamodb의 데이타를 읽을 수 있는 권한이 부여되었습니다.
 
-15\. 코드 내 [line 6](/ElasticSearchLambda/ZombieWorkshopSearchIndexing.js#L6)에 **region** 코드를 정확하게 입력합니다. (CloudFormation Stack 및 Lambda 함수를 만든 리전)
+13\. 다시 lambda 함수의 설정으로 돌어와서 trigger를 등록하기 위해서 **Configuration** tab의 Designer에서 Add triggers의 scroll을 내려서 DynamoDB를 선택합니다. 이제 화면 아래에 Configure triggers 란이 보이면 DynamoDB table에 **[Your CloudFormation stack name]-messages**라는 DynamoDB table을 선택합니다. **Batch size**를 **5**로 설정하고, **Starting position**을 **Lastest**로 선택하고, **Enable trigger** 체크박스에 체크합니다.이제 "Add" 버튼을 누릅니다.
+![Lambda Add triggers](/Images/ElasticsearchService-LambdaTrigger.png)
 
-7번째 행에는 **endpoint**를 **ENDPOINT_HERE**에 대체합니다. 8번 단계에서 기록해 둔 Elasticsearch 엔드포인트로서 **https://로 시작**하는 것을 정확히 붙여넣습니다.
+14\. 이제 Lambda 함수의 소스를 구현을 할 차례입니다. lambda functions 목록으로 이동해서 다시 **"[Your CloudFormation stack name]-ESsearch"**을 open 합니다(앞에서 Add trigger 작업을 수행한 페이지에서는 Function code가 보이지 않기 때문에 다시 들어와야 합니다.). 이제 Github의 "ElasticsearchLambda" 폴더에 있는 ZombieWorkshopSearchIndexing.js 파일을 복사하여 Lambda 함수 code를 수정합니다.
 
-* 클러스터 설정이 완료되고 "Active" 상태에서 본 과정을 진행해야 합니다.
+15\. 코드 내 [line 6](/ElasticSearchLambda/ZombieWorkshopSearchIndexing.js#L6)에 **region** 코드를 정확하게 입력합니다. (CloudFormation Stack 및 Lambda 함수를 만든 리전, Seoul region의 경우 ap-northeast-2)
 
-16\. 이제 Lambda 함수에 IAM 역할을 지정할 차례입니다. **Create new Role from template(s)**을 선택한 후, **"[Your CloudFormation stack name]-ZombieLabLambdaDynamoESRole"** 처럼 이름을 넣고 **Elasticsearch permissions** Role Template를 선택합니다.
+7번째 행에는 **endpoint** 값을 **ENDPOINT_HERE** 문자열 자리에 대체합니다. 8번 단계에서 기록해 둔 Elasticsearch 엔드포인트로서 **https://로 시작**하는 것을 정확히 붙여넣습니다.
 
-17\. "Timeout"항목에서는 값을 **1** 분으로 바꿉니다. Lambda 함수가 타임아웃 전에 메시지 처리를 완료하도록 하게끔 하기 위해 약간 길게 설정합니다. 나머지 값들은 그대로 두고 **Next**를 눌러 Review 페이지에서 **Create function**을 눌러 함수를 만듭니다.
+* Elasticsearch 클러스터 설정이 완료되고 Domain status가 "Active" 상태에서 본 과정을 진행해야 합니다.
 
-18\. 위의 과정에서 우리는 테이블에 들어오는 메시지를 실시간으로 캡쳐해서 Lambda 함수로 보내기 위해 [DynamoDB Streams](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)을 사용합니다. Lambda 함수는 이를 바로 Elasticsearch 클러스터로 보내게 됩니다. 이제 채팅 창에서 적는 모든 메시지는 Elasticsearch 서비스로 보내져서 검색 색인이 만들어집니다. 5개 이상의 채팅 창 메시지(DynamoDB Stream의 이벤트 소스 배치 사이즈)를 적고 난 후, ES 서비스의 "Indices" 부분을 보시면 여러분이 보낸 메시지가 색인되어 있는 것을 보실 수 있습니다.
+16\. 화면 아래의 Basic settings의 "Timeout"항목에서는 값을 **1** 분으로 바꿉니다. Lambda 함수가 타임아웃 전에 메시지 처리를 완료하도록 하게끔 하기 위해 약간 길게 설정합니다. 나머지 값들은 그대로 두고 우측 상단의 **Save** 버튼을 눌러 저장합니다.
+
+17\. 위의 과정에서 우리는 테이블에 들어오는 메시지를 실시간으로 캡쳐해서 Lambda 함수로 보내기 위해 [DynamoDB Streams](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)을 사용합니다. Lambda 함수는 이를 바로 Elasticsearch 클러스터로 보내게 됩니다. 이제 채팅 창에서 적는 모든 메시지는 Elasticsearch 서비스로 보내져서 검색 색인이 만들어집니다. 5개 이상의 채팅 창 메시지(DynamoDB Stream의 이벤트 소스 배치 사이즈)를 적고 난 후, ES 서비스의 "Indices" 부분을 보시면 여러분이 보낸 메시지가 색인되어 있는 것을 보실 수 있습니다.
 ![API Gateway Invoke URL](/Images/Search-Done.png)
 
 **LAB 3 실습 종료**
