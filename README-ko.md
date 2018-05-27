@@ -506,6 +506,9 @@ Review policy 화면의 Name에 적절한 이름을 부여합니다. 본 실습�
 
 7번째 행에는 **endpoint** 값을 **ENDPOINT_HERE** 문자열 자리에 대체합니다. 8번 단계에서 기록해 둔 Elasticsearch 엔드포인트로서 **https://로 시작**하는 것을 정확히 붙여넣습니다.
 
+51번 라인에 아래와 같은 코드를 한 줄 더 추가하도록 합니다. Elasticsearch 6.0 버전부터 http header에 Content-type 헤더가 없으면 406 오류를 발생시키므로 해당코드의 추가가 필요합니다.
+req.headers['Content-Type'] = 'application/json';
+
 * Elasticsearch 클러스터 설정이 완료되고 Domain status가 "Active" 상태에서 본 과정을 진행해야 합니다.
 
 16\. 화면 아래의 Basic settings의 "Timeout"항목에서는 값을 **1** 분으로 바꿉니다. Lambda 함수가 타임아웃 전에 메시지 처리를 완료하도록 하게끔 하기 위해 약간 길게 설정합니다. 나머지 값들은 그대로 두고 우측 상단의 **Save** 버튼을 눌러 저장합니다.
@@ -525,65 +528,60 @@ Review policy 화면의 Name에 적절한 이름을 부여합니다. 본 실습�
 
 **실습 소개**
 
-본 실습에서는 생존자 채팅을 Slack 채널과 연동하게 됩니다. 좀비 사태 생존자들은 별도의 채팅 앱을 통해 정보를 교환할 수도 있기 때문에, 멀티 소통 수단을 지원하는 것은 매우 중요합니다. 본 실습을 마치면, Slack을 사용하는 생존자들도 우리 채팅앱으로 "/" 명령어를 통해 메시지를 보낼 수 있습니다. 슬랙 명령어로 메시지를 보내면, 이는 우리 채팅 API로 전달이 되게 되는데 이는 두번째 Twilio 실습과 유사합니다.
+본 실습에서는 생존자 채팅을 Slack 채널과 연동하게 됩니다. 좀비 사태 생존자들은 별도의 채팅 앱을 통해 정보를 교환할 수도 있기 때문에, 멀티 소통 수단을 지원하는 것은 매우 중요합니다. 본 실습을 마치면, Slack을 사용하는 생존자들도 우리 채팅앱으로 slash command를 통해 메시지를 보낼 수 있습니다. Slack 명령어로 메시지를 보내면, 이는 우리 채팅 API로 전달이 되게 되는데 이는 두번째 Twilio 실습과 유사합니다.
 
 만약 여러분이 아직 Slack 서비스에 익숙하지 않으시다면, 한번 설치해서 사용해 보시길 권장합니다. 개발자 커뮤니티에서 매우 인기 있는 커뮤니케이션 수단입니다. Slack은 "Channels"이라는 독특한 채팅 방을 사용합니다. 좀 더 자세한 사항은 웹 사이트를 참고하세요.
 
 **Slack 연동 아키텍처**
 ![Overview of Slack Integration](/Images/SlackOverview.png)
 
-1\. 맨 먼저 [http://www.slack.com](http://www.slack.com)으로 가서 사용자명을 만들고 팀을 생성합니다. (가급적, 맨처음 가입 시 사용한 Slack 정보로 만듭니다.)
+1\. 맨 먼저 [http://www.slack.com](http://www.slack.com)으로 가서 사용자명을 만들고 팀을 생성합니다. (이 때, zombie chat application에 계정 생성 시 작성했던 slack username, Slack Team Domain Name과 동일한 값으로 생성하도록 합니다. 이 값이 일치하지 않으면 slack에서 전송하는 메세지를 처리하는 lambda 함수에서 오류를 발생합니다. 만약 어떤 값으로 slack 계정을 생성해야 할지 모르겠다면 우선 slack 계정을 생성한 후, dynamodb에서 해당 값을 갱신하면되므로 그대로 진행하도록 합니다.)
 
-2\. Slack에 가입 후 로그인 하고 나면, [https://slack.com/apps](https://slack.com/apps)에서 상단에 **Build**를 선택합니다. 다음 화면에서 **Make a Custom Integration**를 클릭합니다.
+2\. Slack에 가입 후 로그인 하고 나면, 아래와 같은 화면이 보일 것인데, 좌측메뉴 하단의 Apps를 click 합니다.
+![Slack Apps](/Images/Slack-Apps.png)
 
-3\. "Custom Integration"페이지에서, 새로 만들 **Slash Commands**를 선택합니다. Slack 명령어는 채팅 창에서 외부 소스로 메시지 혹은 명령을 전달할 수 있도록 하기 위한 설정입니다. Slack 명령어가 설정되면 이는 외부로 POST 호출을 하게 되고, 이는 우리의 API Gateway를 호출하도록 할 수 있습니다.  
+3\. 아래와 같은 Browse Apps 화면이 나오면 Slash Commands를 입력합니다. Slash Commands는 slack 내에서 메세지 입력 시 외부 system을 호출 할 수 있도록 하는 기능을 제공하므로 이를 이용해서 우리의 API Gateway를 호출하도록 할 수 있습니다. 화면에서 Slash Commands 옆의 install을 click 합니다.  
 
-4\. Slash Commands 페이지에서 **Commands** 텍스트 창에 명령어를 넣습니다. 예를 들어, **/survivors** 를 넣고 난 후, "Add Slash Command Integration"를 눌러 저장합니다.
+4\. Slash Commands 페이지에서 좌측의 Add Configuration을 click 합니다. 화면의 **Choose a Commands** 텍스트 창에 외부로 전송하기 위한 약속 문구를 넣습니다. 예를 들어, **/survivors** 를 넣고 난 후, "Add Slash Command Integration"를 눌러 저장합니다.
 
-5\. Integration Settings 페이지에서 **Method**는 드롭다운 메뉴에서 "POST"를 선택합니다. 그리고, 아래로 스크롤 하여 **Token** 항목에 Token 값을 복사합니다. 다음 단계에서 꼭 필요합니다.
+5\. Integration Settings 페이지에서 **Method**는 드롭다운 메뉴에서 "POST"를 선택합니다. 그리고, 아래로 스크롤 하여 **Token** 항목에 Token 값을 기록해둡니다. 다음 단계에서 꼭 필요합니다.
 
 6\. Slack 웹 사이트를 그대로 열어 둔채, 다른 탭을 열어 AWS 관리 콘솔에서 Lambda 서비스로 들어갑니다.
 
-7\. **Create a Lambda function**를 눌러서 Slack 메시지를 받아서 채팅창으로 보낼 새로운 Lambda 함수를 만듭니다.
+7\. **Create function**를 눌러서 Slack 메시지를 받아서 채팅창으로 보낼 새로운 Lambda 함수를 만듭니다.
 
-8\. 왼쪽 메뉴의 **Configure function**을 선택합니다.
+8\. 함수 이름은 **"[Your CloudFormation Stack name]-SlackService"** 정도로 넣은 다음, Nodejs 버전은 Nodejs 6.10을 선택합니다. Role에서 Chooese an existing role을 선택하고, Exsisting role에서는 **[Your stack name]-ZombieLabLambdaRole...** 문구에 해당하는 역할을 선택합니다. 간단하게 진행하기 위해, 모든 Lambda 함수에서 같은 역할을 재사용합니다.
 
-9\. 함수 이름은 **"[Your CloudFormation Stack name]-SlackService"** 정도로 넣은 다음, Nodejs 버전은 Nodejs 4.3을 선택한 상태에서, Github 레포지터리로 이동합니다.
+9\. 우측 하단의 Create function 버튼을 눌러 lambda 함수를 생성합니다.
 
 10\. Github 레포지터리 Slack 폴더에서 **SlackService.js** 파일을 찾아 코드 내용을 복사 한 후, 함수 에디터에 붙여 넣기 합니다.
 
-11\. 이전에 복사 해둔 Slack Token 내용을 [line 15](/Slack/SlackService.js#L15)에 있는 "token" 변수에  **INSERT YOUR TOKEN FROM SLACK HERE** 대신 입력합니다.
+11\. 앞에 복사 해둔 Slack Token 내용을 [line 15](/Slack/SlackService.js#L15)에 있는 "token" 변수에  **INSERT YOUR TOKEN FROM SLACK HERE** 대신 입력합니다.
 
 * Slack에서는 연동을 위해 단일 토큰을 제공합니다. Lambda 함수에서 토큰을 확인 수단으로서 사용 가능합니다. Slack에서 API 엔드포인트로 요청이 들어오면, Lambda 함수가 호출되어 Slack 데이터를 받습니다. 이때 Lambda 함수는 코드에 있는 토큰과 들어온 토큰이 같은지 확인하여 메시지 유효성을 확인합니다. 토큰이 맞지 않으면, Lambda 함수는 오류를 반환하고 요청 처리를 하지 않습니다.
 
 12\. "API" 변수에는 Slack에서 온 메시지를 보내기 위한 HTTPS 호출을 위해, 채팅 서비스(/zombie/message)에 API Gateway 풀 도메인 이름(FQDN)을 입력합니다. 즉, [line 9](/Slack/SlackService.js#L9)의 **API.endpoint**에는 "INSERT YOUR API GATEWAY FQDN HERE INCLUDING THE HTTPS://"를 **/message POST method**의 도메인 명 즉,  "https://xxxxxxxx.execute-api.us-west-2.amazonaws.com"와 유사한 API 엔드포인트 도메인명을 치환합니다.
 
-마찬가지로 **API.region** 변수에는 CloudFormation을 실행했던 리전 코드를 입력합니다.
+마찬가지로 8라인의 **API.region** 변수에는 CloudFormation을 실행했던 리전 코드를 입력합니다(seoul region의 경우 ap-northeast-2).
 
-마지막으로 DynamoDB Users 테이블의 이름을 복사합니다. 이 값은 **table** 변수에 넣어야 합니다. "slackindex" 테이블 (호출 시 인덱스를 만드는 DynamoDB 테이블)도 CloudFormation "Output" 탭의 **DynamoDBUsersTableName** 및  **DynamoDBUsersSlackIndex**에서 복사하면 됩니다.
+마지막으로 12, 13라인의 DynamoDB Users table 명과 index 명을 설정합니다. 이 값은 CloudFormation "Output" 탭의 **DynamoDBUsersTableName** 및  **DynamoDBUsersSlackIndex**에서 복사하면 됩니다.
 
 * 이제 함수 코드에서는 Slack 연동을 위해 토큰 유효성 확인을 하고, 완료되면 DynamoDB User 테이블에서 Slack Username 및 Slack Team Domain명이 사용자와 맞는지 확인합니다. 이들 값이 Users 테이블과 일치하면, 생존자로 등록된 사람이 메시지를 보낸다는 것을 확인하고 Slack 메시지를 파싱하여, 이를 **/message** 엔드포인트로 보내 채팅창에 전달합니다.
 
-13\. 함수 코드를 복사하고, 모든 변수 설정이 완료되면, 아래로 스크롤 하여 **Lambda function handler and role**에서 **Choose an existing role**를 눌러  **[Your stack name]-ZombieLabLambdaRole...**와 유사한 역할을 선택합니다. 간단하게 진행하기 위해, 모든 Lambda 함수에서 같은 역할을 재사용합니다.
+13\. Lambda 화면 아래의 Basic settings에서 **Timeout**을 **30**초로 설정하고 우측 상단의 **Save** 버튼을 눌러 저장합니다.
 
-14\. Advanced 설정에서 **Timeout**을 **30**초로 설정하고 **Next**를 누릅니다.
-
-15\. Review 페이지에서 모든 것이 맞는지 최종 확인을 합니다.
-
-16\. **Create function**를 눌러 함수를 만듭니다.
-
-17\. 함수가 만들어지면, AWS 관리 콘솔에서 API Gateway 서비스로 이동합니다. "Zombie Workshop API Gateway" API에서 왼쪽 메뉴의 "/zombie" 리소스를 선택합니다. 그리고, **Actions** 버튼을 누리고, "Create Resource"를 합니다. 리소스 이름은 **slack**이라고 하고 "Create Resource"를 눌러 API 서비스를 만듭니다. 설정이 끝나면 아래 화면과 같이 됩니다.
+14\. Lambda 함수가 만들어지면, AWS 관리 콘솔에서 API Gateway 서비스로 이동합니다. "Zombie Workshop API Gateway" API에서 Resources를 누른 후 우측 resources 중에서 "/zombie" 리소스를 선택합니다. 그리고, 상단의 **Actions** 버튼을 누른 후, "Create Resource"를 선택합니다. Resource Name에 **slack**이라고 입력하고 우측 하단의 "Create Resource" 버튼을 눌러 API 서비스를 만듭니다.
 ![Create Slack API Resource](/Images/Slack-Step17.png)
 
-* 이번 단계에서는 Slack의 "/" 명령을 수행할 경우 오는 호출을 처리하는 API 서비스를 만들었습니다. 다음 단계는 POST 메소드를 만들어서 이를 Lambda 함수와 연계시키고, API 호출로 들어온 데이터를 전처리 한후 /zombie/message 엔드포인트로 보내 DynomoDB에 입력시키게 됩니다.
+* 이번 단계에서는 Slack의 slash command가 전송하는 요청을 처리할 API 서비스를 만들었습니다. 다음 단계는 POST 메소드를 만들어서 이를 Lambda 함수와 연계시키고, API 호출로 들어온 데이터를 전처리 한후 /zombie/message 엔드포인트로 보내 DynomoDB에 입력시키게 됩니다.
 
-18\. 위에서 만든 "/slack" 리소스를 선택한 후, **Actions**을 눌러 **Create Method**를 눌러 **POST**를 선택합니다. POST 메소드 생성 확인 체크 마크를 누른 다음, Integration Type을 **Lambda Function**로 선택합니다. 리전 항목을 선택 한 후, "SlackService"를 치면, 우리가 만든 Lambda 함수가 자동완성 됩니다. 함수 선택 후, **Save**와 **OK**를 눌러 완료합니다.
+15\. 위에서 만든 "/slack" 리소스를 선택한 후, **Actions** 버튼을 누른 후 **Create Method**를 click 합니다. /slack 아래에 네모 box에서  **POST**를 선택합니다. POST 메소드 생성 확인 체크 마크를 누른 다음, Integration Type을 **Lambda Function**로 선택합니다. 리전 항목을 선택 한 후, Lambda Function 란에서 "SlackService"를 치면, 우리가 만든 Lambda 함수가 자동완성 됩니다. 함수 선택 후, **Save**와 **OK**를 눌러 완료합니다.
 
 19\. 이제 /slack POST 메소드에 대해 **Integration Request**를 눌러 맵핑 템플릿을 설정합니다. Slack에서 들어오는 쿼리 스트링 파라미터를 Lambda 함수가 사용 가능한 JSON으로 바꾸는 작업입니다. Slack 메시지를 올바른 형식으로 전환하는데 필요합니다.
 
-20\. **Body Mapping Templates** 화살표를 확장해서 **Add mapping template**를 선택합니다. Content-Type 박스에서, **application/x-www-form-urlencoded**를 입력하고 작은 체크 마크를 선택합니다. 팝업 창이 뜨면, 확인으로 **Yes, secure this integration**를 누릅니다. 이를 통해 호출용 content-types을 설정하였습니다.
+20\. **Body Mapping Templates** 좌측의 화살표를 확장해서 **Add mapping template**를 선택합니다. Content-Type 박스에서, **application/x-www-form-urlencoded**를 입력하고 작은 체크 마크를 선택합니다. 팝업 창이 뜨면, 확인으로 **Yes, secure this integration**를 누릅니다. 이를 통해 호출용 content-types을 설정하였습니다.
 
-Twilio lab에서 했던 대로, JSON 으로 요청을 변환하기 위해 VTL 매핑 로직을 입력합니다. **Generate Template** 드롭다운 메뉴와 함께 새로운 영역이 나오면  **Method Request Passthrough**을 선택합니다.
+Twilio lab에서 했던 대로, JSON 으로 요청을 변환하기 위해 VTL 매핑 로직을 입력합니다. **Generate Template** 드롭다운 메뉴에서 **Method Request Passthrough**을 선택합니다.
 
 텍스트 편집기에서는 기존 VTL 코드를 모두 삭제하고 아래 코드를 붙여 넣습니다.
 
@@ -591,18 +589,37 @@ Twilio lab에서 했던 대로, JSON 으로 요청을 변환하기 위해 VTL �
 {"body": $input.json("$")}
 ```
 
-회색 **Save** 버튼을 누르고 나면, 아래의 결과 화면 처럼 됩니다.
+하단의 회색 **Save** 버튼을 누르고 나면, 아래의 결과 화면 처럼 됩니다.
 ![Slack Integration Response Mapping Template](/Images/Slack-Step20.png)
 
 21\. 콘솔 왼쪽에 **Actions** 버튼을 누른 후, **Deploy API**를 통해 배포를 합니다. API 배포 창 드롭다운 메뉴에서 **ZombieWorkshopStage**를 선택하고 **Deploy**를 누릅니다.
 
-22\. 왼쪽 패널 트리에서 ZombieWorkshopStage를 선택하고 **/zombie/slack**  리소스에 대해 **POST** 메소드를 선택합니다. 아래와 같이 Invoke URL이 보이게 됩니다.
+22\. 왼쪽 Stages 패널 트리에서 ZombieWorkshopStage를 선택하고 좌측 화살표를 눌러서 펼친 후 **/zombie/slack** 리소스에 대해 **POST** 메소드를 선택합니다. 아래와 같이 Invoke URL이 보이게 됩니다.
 ![Slack Resource Invoke URL](/Images/Slack-Step22.png)
 
-23\. Invoke URL 전체를 복사한 후, Slack.com 웹 사이트의 Slash Command 설정 페이지 내 "URL" 텍스트 상자에 Invoke URL을 붙여 넣습니다. URL에는 "HTTPS://"까지 포함하고 있어야 합니다. 밑으로 스크롤 해서 **Save Integration**를 눌러 완료합니다.
+23\. Invoke URL 전체를 복사한 후, Slack.com 웹 사이트의 Slash Command 설정 페이지 내 "URL" 텍스트 상자에 Invoke URL을 붙여 넣습니다. URL에는 "https://"까지 포함하고 있어야 합니다. 밑으로 스크롤 해서 **Save Integration**를 눌러 완료합니다.
 
-24\. 이제 Slack 명령어를 통해 연동이 이루어졌는지 테스트를 해 보면 됩니다. Slack 계정의 팀 채널에서 "/survivors"를 누르고 메시지를 입력합니다. 예를 들어, "/survivors 도와주세요! 좀비가 오고 있ㅇ요!"라고 입력하면, 아래와 같이 메시지 창으로도 전달이 됩니다.
+24\. 이제 Slack 명령어를 통해 연동이 이루어는지 테스트를 해 보면 됩니다. Slack 계정의 팀 chat 채널에서 "/survivors" 예약어와 함께 메시지를 입력합니다. 예를 들어, "/survivors 도와주세요! 좀비가 오고 있어요!"라고 입력하면, 아래와 같이 메시지 창으로도 전달이 됩니다.
 ![Slack Command Success](/Images/Slack-Step24.png)
+
+테스트 시 slack 화면에 {"errorMessage":"The incoming Slack username and team do not match any existing registered suvivors. Please ..."}와 같은 응답이 표시되고 zombie chat application에 메세지가 표시되지 않는다면 이는 zombie chat application 가입 시 입력했던 slack username, slack team domain name이 실제 slack 가입 시 입력했던 값과 일차하지 않아서 발생하는 것이다.
+이 경우 아래의 2가지 방법 중 한가지를 이용해서 설정을 변경하도록 한다.
+1) test를 위한 임시방편으로 dynamodb의 user table 정보를 갱신하도록한다(여기서 임시방편이라고 한 이유는 이렇게하더라도 logout 후 다시 login하면 dynamodb user table이 원래대로 돌아가기 때문인데 이는 cognito에 등록된 Pre authentication trigger에 의해 수행되는 lambda 때문이다. 이는 본 실습의 sample application 환경과 관련된 사항이므로 본 실습에서 더 자세한 설명은 생략한다.). 우선 slack에 등록된 값을 확인하기 위해서 아래와 같이 수행한다. 현재 slack 화면의 url은 https://<team domain name>.slack.com 형식이므로 이를 통해서 slack team domain name을 구한다. slack user name을 구하기 위해서 아래와 같이 수행한다. 좌상단의 display name을 click 한 후 아래와 같이 메뉴가 펼쳐지면 Profile & account를 click한다.
+![Slack username](/Images/Slack-Step28.png)
+
+우측 화면의 Workspace Directory에서 톱니바퀴 아이콘을 click 한다.
+![Slack username](/Images/Slack-Step29.png)
+
+Account 화면 제일 아래에서 Username 옆의 expand 버튼을 click 해서 username을 확인한다.
+이제 aws management console의 dynamodb 화면에서 **[Your stack name]-users** 테이블로 이동한 후, Items tab에서 해당 사용자에 대한 slackteamdomain 값과 slackuser 값을 변경한다.
+값을 변경했다면 다시 test를 수행해본다.
+(주의!) 이 방식은 zombie chat application을 logout한 후 다시 login하면 dynamodb table의 slackteamdomain, slackuser 값이 원래대로 돌아가버리므로 영구적인 변경을 해야한다면 아래의 2번 방식을 적용하도록 한다.
+
+2) 위 방법은 dynamodb table의 값을 변경하는 방법이고 이 방법은 slack의 설정을 변경하는 방법이다. 우선 dynamodb **[Your stack name]-users** table의 Item tab에서 해당 user의 slackteamdomain 값과 slackuser 값을 기록해둔다. 이제 slack username을 확인하는 곳으로 이동해서 username을 확인한후 dynamodb의 값과 일치하지 않으면 이를 수정하고 Save 버튼을 click 한다(slack의 username은 하루에 2회만 변경가능하므로 변경에 주의하도록 한다.). 또한 team domain name을 변경해야 한다면 아래와 같이 수행한다. slack 화면에서 좌상단의 display name을 click한 후, 아래의 Administration을 선택한 후, 우측의 Workspace settings를 click 한다.
+![Slack team domain name](/Images/Slack-Step30.png)
+
+Settings & Permissions 화면의 아래 쪽에서 Workspace Name & URL 란 옆의 Change Workspace Name & URL 버튼을 click 한다. 이곳의 Workspace url의 앞부분에 기술하는 값이 team domain 명이므로 이 값을 dynamodb에 등록된 값으로 변경한 후, Save Changes 버튼을 click 한다. 이제 화면 좌상단의 Back to Slack 링크를 click해서 slack 화면으로 돌아온 후 다시 test를 수행해본다.
+
 
 **LAB 4 실습 종료**
 
