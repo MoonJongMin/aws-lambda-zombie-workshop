@@ -770,7 +770,7 @@ Lambda 함수 편집기에 붙여 넣을 때, 소스 코드 상의 몇 가지 �
 
 ## 워크샵 종료
 
-1\. 지금까지 사용한 모든 환경을 종료하려면, CloudFormation 콘솔에서 만들어진 Stack을 삭제하면 됩니다. 단, 몇 가지 리소스 의존성이 있기 때문에 먼저 아래 2-6\ 단계의 삭제 과정을 거친 후 삭제하면 됩니다.
+1\. 지금까지 사용한 모든 환경을 종료하려면, CloudFormation 콘솔에서 만들어진 Stack을 삭제하면 됩니다. 단, 몇 가지 리소스 의존성이 있기 때문에 먼저 아래 2-6 단계의 삭제 과정을 거친 후 삭제하면 됩니다.
 
 2\. TwilioProcessing Lambda 함수를 삭제합니다. 더이상 Twilio를 사용하지 않으면, 계정도 삭제합니다.
 
@@ -790,7 +790,7 @@ Lambda 함수 편집기에 붙여 넣을 때, 소스 코드 상의 몇 가지 �
 
 8\. 위의 리소스를 모두 삭제했다면, CloudFormation 콘솔에서 워크샵 시작 때 만든 Stack을 선택 한 후, **Delete Stack**을 누릅니다.
 
-* Stack을 성공적으로 지웠다면, 목록에 지워집니다. 모두 지우는데 몬제가 있는 경우, [AWS Support](https://console.aws.amazon.com/support/home)의 추가 기술 지원을 받으시면 됩니다.
+* Stack을 성공적으로 지웠다면, 목록에 지워집니다. 모두 지우는데 문제가 있는 경우, [AWS Support](https://console.aws.amazon.com/support/home)의 추가 기술 지원을 받으시면 됩니다.
 
 * * *
 
