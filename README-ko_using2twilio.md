@@ -197,13 +197,7 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 22\. 이제 로그인 페이지가 보이면, **Sign Up** 버튼을 눌러 회원 가입을 해야 합니다.
 
-23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 format validation이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예: 1882804331)를 넣으셔야 합니다. 이 값은 Lab2의 twilio를 이용한 SMS 연동을 위한 것으로 미국 전화번호 생성 및 test 간 휴대폰 과금 방지를 위해서 https://www.textnow.com 에 접속하여 자신만의 미국 전화 번호를 하나 생성하고, 해당 번호를 여기에 입력합니다. 입력시에 숫자로만 10자리를 입력하도록 합니다. 진행 중 textnow 가입(facebook, google 계정으로 들어가지 마시기 바랍니다.)이 되지 않을 경우 web이 아닌 app으로 해보시고 그것도 실패할 경우, SA에게 도움을 요청하세요.
-
-![Confirm your signup](/Images/Textnow-signup-01.png)
-
-![Confirm your signup](/Images/Textnow-signup-02.png)
-
-![Confirm your signup](/Images/Textnow-signup-03.png)
+23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 format validation이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예:  1882804331)를 넣으셔야 합니다. 이 값은 Lab2의 twilio를 이용한 SMS 연동을 위한 것으로 우선 임의의 10자리를 입력하면 됩니다. 단, 0으로 시작하는 것은 안됩니다. 추후 Lab2 수행 시에 twilio에서 부여 받는 전화번호로 해당 값을 다시 갱신할 것 입니다.
 
 * **Select your Camp**: 여러분이 살고 있는 지역을 입력합니다. 본 애플리케이션에서 현재 속성은 사용되지 않지만, 향후에 추가적으로 사용할 수 있습니다. 워크샵 실습을 종료한 후 부록에 있는 별도 도전 사항을 시도해 보시기 바랍니다.
 
@@ -425,7 +419,7 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 28\. zombie chat application은 /zombie/twilio가 호출될 경우 lambda에서 dynamodb table에 등록된 사용자의 phone 정보와 비교해서 유효한 사용자가 보낸 메세지만 처리하도록 검증합니다. 따라서 최초 zombie chat 회원가입 시 등록한 전화번호가 SMS 발신 전화번호와 일치해야 합니다. 이를 위해서 Dynamodb table "[Your CloudFormation stack name]-users"을 열어 Items 탭에서 해당 사용자의 phone 번호를 SMS 발신 전화번호로 갱신합니다. 이 때, "+12223334444"와 같이 +로 시작하고 하이픈(-) 없이 붙여서 등록하도록 합니다.
 
-29\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. 앞에서 가입한 TextNow에서 Twilio 전화번호로 메세지를 전송해서 test를 해볼 수 있습니다. 하지만 현재 상태로는 test가 되지 않을 것입니다. Twilio의 정책 변경으로 인해 trial 상태에서 부여 받은 전화번호로 문자 발송 시 허용 발신자 번호로 등록된 번호가 아닌 경우 twilio에서 문자를 수신한 후 API Gateway 호출을 해주지 않기 때문입니다. Twilio 유로 사용 번호라면 이러한 제약이 없습니다. 실습을 위해 Twilio에 TextNow에서 발급 받은 전화번호를 Verified Caller ID로 등록합니다. 이를 위해 twilio에 로그인 합니다. 이곳에서 phone numbers 화면의 좌측메뉴에서 Verified Caller IDs를 클릭합니다.
+29\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. 하지만 현재 상태로는 test가 되지 않을 것입니다. Twilio의 정책 변경으로 인해 trial 상태에서 부여 받은 전화번호로 문자 발송 시 허용 발신자 번호로 등록된 번호가 아닌 경우 twilio에서 문자를 수신한 후 API Gateway 호출을 해주지 않기 때문입니다. Twilio 유로 사용 번호라면 이러한 제약이 없습니다. 실습을 위해 부득이 아래와 같은 방식으로 test를 진행하도록 합니다. 우선 구분을 위해서 앞에서 등록했던 twilio를 수신용 twilio라고 하겠습니다. 무료로 미국 전화번호로 문자 메세지 발송을 하기 위해서 송신용 twilio를 하나 더 생성합니다. 기존 수신 용 twilio와 다른 email을 이용해서 twilio 가입을 하나 더 진행합니다. 앞에서 수신용 twilio와 동일한 방법으로 SMS가 가능한 전화번호를 미국에 생성합니다(본 Lab 가이드 2~4 번 참고). 이제 송신용 전화번호를 기록한 후, 수신용 twilio에 로그인 합니다. 이곳에서 phone numbers 화면의 좌측메뉴에서 Verified Caller IDs를 클릭합니다.
 
 ![Twilio Verified Caller IDs](/Images/Twilio-Step27.png)
 
@@ -433,13 +427,25 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 ![Twilio Verified Caller IDs](/Images/Twilio-Step28.png)
 
-그 후, TextNow 전화번호를 입력한 후 Text Me 버튼을 click 합니다. 그러면 아래와 같이 verification code를 입력하라는 화면이 나옵니다.
+그 후, 새로 생성한 송신용 twilio 전화번호를 입력한 후 Text Me 버튼을 click 합니다. 그러면 아래와 같이 verification code를 입력하라는 화면이 나옵니다.
 
 ![Twilio Verified Caller IDs](/Images/Twilio-Step29.png)
 
-TextNow에서 verification code를 확인한 후, twilio 화면의 verification code에 입력 후, Submit 버튼을 눌러서 verified caller id에 등록합니다.
+이제 송신용 twilio 화면으로 이동해서 Programmable SMS 메뉴로 이동한 후, View all Message Logs를 click합니다.
 
-30\. 이제 TextNow에서 Twilio 전화 번호로 문자 메시지를 보내시면, 채팅창에 전달이됩니다. 모든 설정이 정상이라면 잠시 후 zombie chat application 화면에서 메세지를 확인할 수 있습니다.
+![Twilio Verified Caller IDs](/Images/Twilio-Step30.png)
+
+이곳에서 수신용 twilio에서 전송한 verification code를 확인한 후, 수신용 twilio 화면의 verification code에 입력 후, Submit 버튼을 눌러서 verified caller id에 등록합니다.
+
+송신용 twilio에 대해서도 수신용 twilio의 전화번호가 Verified Caller ID로 등록되어 있어야 하므로 위 설정을 반대로도 구성합니다(이 작업이 필요한 이유는 twilio는 SMS를 받게되면 수신 측에서 송신측으로 자동으로 수신했다는 응답 SMS를 전송하기 때문입니다.).
+
+**(주의)** 송신용 twilio에는 **Messaging** 영역의 **Configure With** 드롭다운 항목에서 **Webhooks, TwiML Bins, ...** 옵션의 **A MESSAGE COMES IN**에 api gateway endpoint를 기술해서는 안됩니다. 이 값은 반드시 수신용 twilio에만 등록되어 있어야 합니다. twilio는 SMS 수신 시 발신 전화번호로 SMS를 잘 받았다는 응답 SMS를 자동으로 보내기 때문에 송신 twilio에도 api gateway endpoint가 등록되어 있게되면 api gateway가 반복적으로 호출이 되는 현상이 발생하게 됩니다.
+
+30\. 이제 송신 Twilio에서 수신 Twilio 전화 번호로 이제 문자 메시지를 보내시면, 채팅창에 전달이됩니다. 송신 twilio에서 SMS를 보내기 위해서 좌측 메뉴의 "Programmable SMS"를 선택하고, Learn & Build를 click하면 아래와 같은 화면이 보입니다.
+
+![Sending SMS via twilio](/Images/Twilio-Step31.png)
+
+TO란에 수신 twilio의 전화번호를 입력합니다. +12223334444 와 같은 형식으로 입력합니다. BODY란에 전달하고자 하는 내용을 입력한 후, 아래의 Make Request 버튼을 click 합니다. 모든 설정이 정상이라면 잠시 후 zombie chat application 화면에서 메세지를 확인할 수 있습니다.
 
 ![Receiving SMS via twilio](/Images/Twilio-Step32.png)
 
