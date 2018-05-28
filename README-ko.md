@@ -197,12 +197,16 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 22\. 이제 로그인 페이지가 보이면, **Sign Up** 버튼을 눌러 회원 가입을 해야 합니다.
 
-23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 format validation이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예: 1882804331)를 넣으셔야 합니다. 이 값은 Lab2의 twilio를 이용한 SMS 연동을 위한 것으로 미국 전화번호 생성 및 test 간 휴대폰 과금 방지를 위해서 https://www.textnow.com 에 접속하여 자신만의 미국 전화 번호를 하나 생성하고, 해당 번호를 여기에 입력합니다. 입력시에 숫자로만 10자리를 입력하도록 합니다. 진행 중 textnow 가입(facebook, google 계정으로 들어가지 마시기 바랍니다.)이 되지 않을 경우 web이 아닌 app으로 해보시고 그것도 실패할 경우, SA에게 도움을 요청하세요.
+23\. 주어진 가입 양식을 채워넣습니다. 단, 회원 가입 시 전화 번호에 대한 format validation이 진행됩니다. 따라서, 유효한 전화번호를 입력할 때는 미국 번호인 10자리 (예: 1882804331)를 넣으셔야 합니다. 이 값은 Lab2의 twilio를 이용한 SMS 연동을 위한 것으로 미국 전화번호 생성 및 test 간 휴대폰 과금 방지를 위해서 https://www.textnow.com 에 접속하여 자신만의 미국 전화 번호를 하나 생성하고, 해당 번호를 zombie app 회원가입란의 mobile phone에 입력합니다. 입력시에 숫자로만 10자리를 입력하도록 합니다.
+textnow 가입(facebook, google 계정으로 들어가지 마시기 바랍니다.)이 되지 않을 경우 web이 아닌 app으로 해보시고 그것도 실패할 경우, SA에게 도움을 요청하시기 바랍니다.
 
 ![Confirm your signup](/Images/Textnow-signup-01.png)
 
+Aread Code는 미국 지역번호로 적절한 값을 입력하도록 합니다.
+
 ![Confirm your signup](/Images/Textnow-signup-02.png)
 
+발급 받은 전화번호를 잘 기록해두도록 합니다.
 ![Confirm your signup](/Images/Textnow-signup-03.png)
 
 * **Select your Camp**: 여러분이 살고 있는 지역을 입력합니다. 본 애플리케이션에서 현재 속성은 사용되지 않지만, 향후에 추가적으로 사용할 수 있습니다. 워크샵 실습을 종료한 후 부록에 있는 별도 도전 사항을 시도해 보시기 바랍니다.
