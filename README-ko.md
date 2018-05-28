@@ -437,6 +437,8 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 이곳에서 수신용 twilio에서 전송한 verification code를 확인한 후, 수신용 twilio 화면의 verification code에 입력 후, Submit 버튼을 눌러서 verified caller id에 등록합니다.
 
+송신용 twilio에 대해서도 수신용 twilio의 전화번호가 Verified Caller ID로 등록되어 있어야 하므로 위 설정을 반대로도 구성합니다(이 작업이 필요한 이유는 twilio는 SMS를 받게되면 수신 측에서 송신측으로 자동으로 수신했다는 응답 SMS를 전송하기 때문입니다.).
+
 **(주의)** 송신용 twilio에는 **Messaging** 영역의 **Configure With** 드롭다운 항목에서 **Webhooks, TwiML Bins, ...** 옵션의 **A MESSAGE COMES IN**에 api gateway endpoint를 기술해서는 안됩니다. 이 값은 반드시 수신용 twilio에만 등록되어 있어야 합니다. twilio는 SMS 수신 시 발신 전화번호로 SMS를 잘 받았다는 응답 SMS를 자동으로 보내기 때문에 송신 twilio에도 api gateway endpoint가 등록되어 있게되면 api gateway가 반복적으로 호출이 되는 현상이 발생하게 됩니다.
 
 30\. 이제 송신 Twilio에서 수신 Twilio 전화 번호로 이제 문자 메시지를 보내시면, 채팅창에 전달이됩니다. 송신 twilio에서 SMS를 보내기 위해서 좌측 메뉴의 "Programmable SMS"를 선택하고, Learn & Build를 click하면 아래와 같은 화면이 보입니다.
