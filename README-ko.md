@@ -397,7 +397,7 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 25\. **Add mapping template**을 눌러 이전에 했던 Integration Request에서 했던 방식과 유사하게 진행합니다.
 
-26\. 즉, "Content-Type"에는 **application/xml**라고 입력하고, 작은 체크 박스를 눌러 계속 진행합니다. 앞에서와 같이 JSON 데이터를 XML로 변환하는 VTL 매핑 로직을 기술해야합니다. 이를 통해 /twilio POST 메소드에 대해 응답은 XML 포맷으로 하게 됩니다.  새 content-type을 만들고 나면, 오른쪽에 **Generate Template**을 위한 드롭다운 영역이 나오면, 드롭다운을 눌러 **Method Request Passthrough**를 선택합니다.
+26\. 즉, "Content-Type"에는 **application/xml**라고 입력하고, 작은 체크 박스를 눌러 계속 진행합니다. 앞에서와 같이 JSON 데이터를 XML로 변환하는 VTL 매핑 로직을 기술해야합니다. 이를 통해 /twilio POST 메소드에 대해 응답은 XML 포맷으로 하게 됩니다. 새 content-type을 만들고 나면, 오른쪽에 **Generate Template**을 위한 드롭다운 영역이 나오면, 드롭다운을 눌러 **Method Request Passthrough**를 선택합니다.
 텍스트 에디터에서는 기존 코드를 지우고 아래 코드를 복사해서 붙여넣습니다.
 
 ```
@@ -417,7 +417,7 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 27\. 이제 스크롤을 위로 올려서 푸른색 **Save** 버튼을 누립니다. 마지막으로 API Gateway 콘솔의 왼쪽의 **Actions** 버튼을 누르고, API 배포를 위해 **Deploy API**를 선택합니다. API 배포 창에서는 드롭다운에서 **ZombieWorkshopStage**를 선택한후, **Deploy**를 누릅니다.
 
-28\. zombie chat application은 /zombie/twilio가 호출될 경우 lambda에서 dynamodb table에 등록된 사용자의 phone 정보와 비교해서 유효한 사용자가 보낸 메세지만 처리하도록 검증합니다. 따라서 최초 zombie chat 회원가입 시 등록한 전화번호가 twilio 실습을 위해 부여받은 전화번호와 일치해야 합니다. 이를 위해서 Dynamodb table "[Your CloudFormation stack name]-users"을 열어 Items 탭에서 해당 사용자의 phone 번호를 twilio에서 부여받은 번호로 갱신합니다. 이 때, "+12223334444"와 같이 +로 시작하고 - 없이 붙여서 등록하도록 합니다.
+28\. zombie chat application은 /zombie/twilio가 호출될 경우 lambda에서 dynamodb table에 등록된 사용자의 phone 정보와 비교해서 유효한 사용자가 보낸 메세지만 처리하도록 검증합니다. 따라서 최초 zombie chat 회원가입 시 등록한 전화번호가 SMS 발신 전화번호와 일치해야 합니다. 이를 위해서 Dynamodb table "[Your CloudFormation stack name]-users"을 열어 Items 탭에서 해당 사용자의 phone 번호를 SMS 발신 전화번호로 갱신합니다. 이 때, "+12223334444"와 같이 +로 시작하고 하이픈(-) 없이 붙여서 등록하도록 합니다.
 
 29\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. 하지만 현재 상태로는 test가 되지 않을 것입니다. Twilio의 정책 변경으로 인해 trial 상태에서 부여 받은 전화번호로 문자 발송 시 허용 발신자 번호로 등록된 번호가 아닌 경우 twilio에서 문자를 수신하지 않기 때문입니다. Twilio 유로 사용 번호라면 이러한 제약이 없습니다. 실습을 위해 부득이 아래와 같은 방식으로 test를 진행하도록 합니다. 우선 구분을 위해서 앞에서 등록했던 twilio를 수신용 twilio라고 하겠습니다. 무료로 미국 전화번호로 문자 메세지 발송을 하기 위해서 송신용 twilio를 하나 더 생성합니다. 기존 수신 용 twilio와 다른 email을 이용해서 twilio 가입을 하나 더 진행합니다. 앞에서 수신용 twilio와 동일한 방법으로 SMS가 가능한 전화번호를 미국에 생성합니다(본 Lab 가이드 2~4 번 참고). 이제 송신용 전화번호를 기록한 후, 수신용 twilio에 로그인 합니다. 이곳에서 phone numbers 화면의 좌측메뉴에서 Verified Caller IDs를 클릭합니다.
 
