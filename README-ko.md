@@ -517,6 +517,12 @@ req.headers['Content-Type'] = 'application/json';
 17\. 위의 과정에서 우리는 테이블에 들어오는 메시지를 실시간으로 캡쳐해서 Lambda 함수로 보내기 위해 [DynamoDB Streams](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)을 사용합니다. Lambda 함수는 이를 바로 Elasticsearch 클러스터로 보내게 됩니다. 이제 채팅 창에서 적는 모든 메시지는 Elasticsearch 서비스로 보내져서 검색 색인이 만들어집니다. 5개 이상의 채팅 창 메시지(DynamoDB Stream의 이벤트 소스 배치 사이즈)를 적고 난 후, ES 서비스의 "Indices" 부분을 보시면 여러분이 보낸 메시지가 색인되어 있는 것을 보실 수 있습니다.
 ![API Gateway Invoke URL](/Images/Search-Done.png)
 
+18\. ElasticSearch에 저장된 데이타를 조회해보기 위해서 AWS management console에서 ElasticSearch domain의 Endpoint를 복사합니다. 브라우저를 열어서 http://endpointurl경로/messages/_search 를 실행합니다. 아마 아래와 같은 내용이 출력되면서 메세지가 보이지 않을 것입니다.
+
+{"Message":"User: anonymous is not authorized to perform: es:ESHttpGet"}
+
+이유는 ElasticSearch 설정 시에 Access policy를 "Allow or deny access to one or more AWS accounts or IAM users"로 했기 때문입니다. 브라우저에서 해당 내용을 보기 위해서 AWS management console의 ElasticSearch 에서 해당 도메인을 선택한 후, Modify access policy 버튼을 누릅니다. 화면에서 Select a template 버튼을 누른 후, "Allow access to the domain from specific IP(s)"를 선택합니다. 팝업 창이 뜨면 자신의 IP를 입력하고 OK 버튼을 click 합니다. 자신의 ip address는 브라우저 창을 열어서 http://checkip.amazonaws.com 을 호출하면 확인할 수 있습니다. 화면에서 submit 버튼을 click해서 최종 설정을 저장합니다. 이제 다시 http://endpointurl경로/messages/_search 을 호출하면 ElasticSearch에 보관된 메세지를 확인할 수 있습니다.
+
 **LAB 3 실습 종료**
 
 본 실습을 마치고 나서, 메시지 내용을 좀 더 검색하고자 하시면 ES 서비스가 제공하는 Kibana 웹 인터페이스를 사용해 보실 수 있습니다. 이를 위해서는 접근 권한을 변경할 필요가 있는데, 현재는 여러분의 AWS 계정에서만 접근 가능하도록 설정되어 Lambda 함수만이 메시지를 색인할 수 있습니다.
