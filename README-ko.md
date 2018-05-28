@@ -201,9 +201,9 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 * **Select your Camp**: 여러분이 살고 있는 지역을 입력합니다. 본 애플리케이션에서 현재 속성은 사용되지 않지만, 향후에 추가적으로 사용할 수 있습니다. 워크샵 실습을 종료한 후 부록에 있는 별도 도전 사항을 시도해 보시기 바랍니다.
 
-* **Slack Username**: 슬랙 실습 과정에서 사용할 슬랙 사용자명을 입력합니다. (예: channy) 기존 slack username이 있다면 그것을 사용하셔도 됩니다. 새로 만들어야 한다면 적절한 값을 입력하고 그 값을 기록해두도록 합니다(slack 가입 시 필요).
+* **Slack Username**: 슬랙 실습 과정에서 사용할 슬랙 사용자명을 입력합니다. (예: channy) 기존 slack username이 있다면 그것을 사용하셔도 됩니다. 새로 만들어야 한다면 적절한 값(slack 회원 가입 시 사용할 mail의 @ 앞부분 문자열)을 입력하고 그 값을 기록해두도록 합니다(slack 가입 시 필요).
 
-* **Slack Team Domain Name**: 슬랙은 여러 사용자가 함께 사용할 수 있습니다. 슬랙 실습 과정에서 사용할 도메인 명을 입력합니다.(예: channy-zombie-team) 기존에 개인적으로 사용하는 슬랙 도메인이나 사용자명이 있으시면 그것을 사용하셔도 됩니다. 새로 만들어야 한다면 적절한 값을 입력하고 그 값을 기록해두도록 합니다(slack 가입 시 필요).
+* **Slack Team Domain Name**: 슬랙은 여러 사용자가 함께 사용할 수 있습니다. 슬랙 실습 과정에서 사용할 도메인 명을 입력합니다.(예: channy-zombie-team) 기존에 개인적으로 사용하는 슬랙 도메인이나 사용자명이 있으시면 그것을 사용하셔도 됩니다. 새로 만들어야 한다면 적절한 값(slack에서 생성할 workspace 명)을 입력하고 그 값을 기록해두도록 합니다(slack 가입 시 필요).
 
 이제 **Sign Up**을 클릭합니다.
 
@@ -506,7 +506,8 @@ Review policy 화면의 Name에 적절한 이름을 부여합니다. 본 실습�
 
 7번째 행에는 **endpoint** 값을 **ENDPOINT_HERE** 문자열 자리에 대체합니다. 8번 단계에서 기록해 둔 Elasticsearch 엔드포인트로서 **https://로 시작**하는 것을 정확히 붙여넣습니다.
 
-51번 라인에 아래와 같은 코드를 한 줄 더 추가하도록 합니다. Elasticsearch 6.0 버전부터 http header에 Content-type 헤더가 없으면 406 오류를 발생시키므로 해당코드의 추가가 필요합니다.
+Elasticsearch 6.0 버전부터 http header에 Content-type 헤더가 없으면 406 오류를 발생시키므로 51번 라인에 아래와 같은 코드가 있는지 확인하시고 없다면 추가하도록 합니다.
+
 req.headers['Content-Type'] = 'application/json';
 
 * Elasticsearch 클러스터 설정이 완료되고 Domain status가 "Active" 상태에서 본 과정을 진행해야 합니다.
