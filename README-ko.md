@@ -427,9 +427,9 @@ Aread Code는 미국 지역번호로 적절한 값을 입력하도록 합니다.
 
 27\. 이제 스크롤을 위로 올려서 푸른색 **Save** 버튼을 누립니다. 마지막으로 API Gateway 콘솔의 왼쪽의 **Actions** 버튼을 누르고, API 배포를 위해 **Deploy API**를 선택합니다. API 배포 창에서는 드롭다운에서 **ZombieWorkshopStage**를 선택한후, **Deploy**를 누릅니다.
 
-28\. zombie chat application은 /zombie/twilio가 호출될 경우 lambda에서 dynamodb table에 등록된 사용자의 phone 정보와 비교해서 유효한 사용자가 보낸 메세지만 처리하도록 검증합니다. 따라서 최초 zombie chat 회원가입 시 등록한 전화번호가 SMS 발신 전화번호와 일치해야 합니다. 이를 위해서 Dynamodb table "[Your CloudFormation stack name]-users"을 열어 Items 탭에서 해당 사용자의 phone 번호를 SMS 발신 전화번호로 갱신합니다. 이 때, "+12223334444"와 같이 +로 시작하고 하이픈(-) 없이 붙여서 등록하도록 합니다.
+28\. zombie chat application은 /zombie/twilio가 호출될 경우 lambda에서 dynamodb table에 등록된 사용자의 phone 정보와 비교해서 유효한 사용자가 보낸 메세지만 처리하도록 검증합니다. 따라서 최초 zombie chat 회원가입 시 등록한 전화번호가 SMS 발신 전화번호(본 실습의 TextNow 전화번호)와 일치해야 합니다. 이를 위해서 Dynamodb table "[Your CloudFormation stack name]-users"을 열어 Items 탭에서 해당 사용자의 phone 번호를 SMS 발신 전화번호로 갱신합니다. 이 때, "+12223334444"와 같이 +로 시작하고 하이픈(-) 없이 붙여서 등록하도록 합니다.
 
-29\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. 앞에서 가입한 TextNow에서 Twilio 전화번호로 메세지를 전송해서 test를 해볼 수 있습니다. 하지만 현재 상태로는 test가 되지 않을 것입니다. Twilio의 정책 변경으로 인해 trial 상태에서 부여 받은 전화번호로 문자 발송 시 허용 발신자 번호로 등록된 번호가 아닌 경우 twilio에서 문자를 수신한 후 API Gateway 호출을 해주지 않기 때문입니다. Twilio 유로 사용 번호라면 이러한 제약이 없습니다. 실습을 위해 Twilio에 TextNow에서 발급 받은 전화번호를 Verified Caller ID로 등록합니다. 이를 위해 twilio에 로그인 합니다. 이곳에서 phone numbers 화면의 좌측메뉴에서 Verified Caller IDs를 클릭합니다.
+29\. 이제 여러분은 Twilio와 여러분의 API로 통합을 완료했습니다. 앞에서 가입한 TextNow에서 Twilio 전화번호로 메세지를 전송해서 test를 해볼 수 있습니다. 하지만 현재 상태로는 test가 되지 않을 것입니다. Twilio의 정책 변경으로 인해 trial 상태에서 부여 받은 전화번호로 문자 발송 시 허용 발신자 번호로 등록된 번호가 아닌 경우 twilio에서 문자를 수신한 후 API Gateway 호출을 해주지 않기 때문입니다. Twilio 유료 사용번호라면 이러한 제약이 없습니다. 실습을 위해 Twilio에 TextNow에서 발급 받은 전화번호를 Verified Caller ID로 등록합니다. 이를 위해 twilio에 로그인 합니다. 이곳에서 phone numbers 화면의 좌측메뉴에서 Verified Caller IDs를 클릭합니다.
 
 ![Twilio Verified Caller IDs](/Images/Twilio-Step27.png)
 
