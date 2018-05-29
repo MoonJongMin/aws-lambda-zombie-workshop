@@ -127,7 +127,7 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 8\. Tags 페이지는 **Next step**을 클릭해서 넘어가고, Devices 페이지에서는 "No" 라는 기본 값을 그대로 둡니다. User pool이 사용자 기기를 기억하도록 설정하지 않는 것입니다.
 
-9\. App clients 페이지에서는 **Add an app client** 링크를 click 합니다. **App client Name** 텍스트 박스에 "Zombie Survivor Chat App"이라고 적고, **Generate client secret 체크박스를 선택하지 않습니다.**. 그리고, **Set attribute read and write permissions** 링크를 click 합니다. 앱에서 맞춤형 속성 값에 "writable" 접근 권한을 주어야 합니다. **Writable Attributes** 체크 박스에 **custom:slackuser, custom:slackteamdomain, custom:camp** 항목을 체크하고, 나머지는 그대로 둔 상태에서 **Create app client**버튼을 누르고, **Next step**을 선택합니다.
+9\. App clients 페이지에서는 **Add an app client** 링크를 click 합니다. **App client Name** 텍스트 박스에 "Zombie Survivor Chat App"이라고 적고, **Generate client secret 체크박스를 선택하지 않습니다.** 그리고, **Set attribute read and write permissions** 링크를 click 합니다. 앱에서 맞춤형 속성 값에 "writable" 접근 권한을 주어야 합니다. **Writable Attributes** 체크 박스에 **custom:slackuser, custom:slackteamdomain, custom:camp** 항목을 체크하고, 나머지는 그대로 둔 상태에서 **Create app client**버튼을 누르고, **Next step**을 선택합니다.
 
 10\. (중요) Triggers 페이지에서 여러 박스 중에 **Pre authentication** 와 **Post confirmation** 의 드롭다운 메뉴에서 "[Your CloudFormation Stack name]-CognitoLambdaTrigger-리전코드"라는 Lambda 함수를 선택한 후, **Next step**을 누릅니다.
 
@@ -202,7 +202,7 @@ textnow 가입(facebook, google 계정으로 들어가지 마시기 바랍니다
 
 ![Confirm your signup](/Images/Textnow-signup-01.png)
 
-Aread Code는 미국 지역번호로 적절한 값을 입력하도록 합니다.
+Area Code는 미국 지역번호로 적절한 값을 입력하도록 합니다.
 
 ![Confirm your signup](/Images/Textnow-signup-02.png)
 
