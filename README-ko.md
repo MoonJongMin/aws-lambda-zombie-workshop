@@ -789,11 +789,14 @@ Lambda 함수 편집기에 붙여 넣을 때, 소스 코드 상의 몇 가지 �
 
 6\. Cognito User Pool 및 Identity Pool을 삭제합니다.
 
+* Cognito와 관련된 Lambda 함수를 삭제합니다.
+
 * User Pool: User Pool에서 "Delete pool" 버튼을 누르면 됩니다.
 
 * Identity Pool: Cognito의 Federated Identities 페이지에서 Identity Pool을 찾아서 ([stackname]-identitypool) **Edit identity pool**를 선택한 후, 아래로 스크롤 한 후 삭제 버튼을 누르면 됩니다.
 
 7\. CloudWatch Logs 화면으로 가서 불필요한 로그 그룹은 삭제합니다.
+* "/aws/lambda/[CloudFormation_stackname]-..." 형식의 log group을 모두 삭제합니다.
 
 8\. 위의 리소스를 모두 삭제했다면, CloudFormation 콘솔에서 워크샵 시작 때 만든 Stack을 선택 한 후, **Delete Stack**을 누릅니다.
 
