@@ -145,7 +145,7 @@ Email subject 항목에 "Signal Corps Survivor Confirmation"이라고 적습니�
 
 11\. Review 페이지에서 설정을 모두 검토 한 후, **Create pool**를 선택합니다. 사용자 풀이 성공적으로 만들어졌다면, 세부 항목 페이지로 돌아가야 합니다.
 
-12\. PC의 텍스트 에디터를 열고, 세부 페이지의 **Pool Id**를 복사해 둡니다. 왼쪽 메뉴의 **App clients** 탭을 열면 보실 수 있는 **App client id** 를 또한 같이 복사해 둡니다.
+12\. PC의 텍스트 에디터를 열고, 생성한 User pool의 좌측 메뉴 일반 설정(General Settings)의 **Pool Id**를 복사해 둡니다. 또한 좌측 메뉴의 **App clients** 탭을 열면 보실 수 있는 **App client id** 를 또한 같이 복사해 둡니다.
 
 이제 User Pools는 모두 설정이 되었습니다. 이제 만들어진 Cognito Identity Pool로 통합하는 설정을 해보겠습니다.
 
@@ -276,13 +276,13 @@ Area Code는 미국 지역번호로 적절한 값을 입력하도록 합니다.
 
 * /talkers 리소스의 GET 메소드에 대해 HTTP 응답 "200"에 대한 설정을 마쳤습니다. 더 많은 응답 형식을 추가할 수 있지만, 본 워크샵에서는 필요하지 않으니 건너뛰도록 하겠습니다.  
 
-11\. 왼쪽 메뉴에서 트리의 "POST" 옵션을 클릭하여,/zombie/talkers/POST 메소드 설정을 선택합니다.  
+11\. 왼쪽 메뉴에서 트리의 "POST" 옵션을 클릭하여 /zombie/talkers/POST 메소드 설정을 선택합니다.  
 
 ![POST Method](/Images/Typing-Step11.png)
 
 12\. 이전 단계 4-10까지를 GET 메소드에서 했던 것을 다시 한번 진행합니다. 하지만, 이번에는 통합 요청에 대해 Lambda 함수를 선택 할 때, 자동 완성에서 "writetalkers"라고 타이핑 하신 후 **_[CloudformationTemplateName]_**-WriteTalkersToDynamoDB-**_[XXXXXXXXXX]_** 같은 이름의 함수를 선택합니다.
 
-* 이 단계에서 채팅앱에서 DynamoDB Talkers 테이블에 사용자가 입력하는 내용을 추가하는 POST 메소드를 설정하고 있습니다. GET 메소드에서 한 것 처럼 POST에 대해서도 똑 같이 설정하면 됩니다. 그런데, POST 메소드에서는 데이터베이스에 전송하기 때문에 다른 Lambda 함수를 사용하는 것입니다. 대신 데이터를 가져오는 것은 "GetTalkersToDynamoDB" 함수를 사용하고 있습니다.
+* 이 단계에서 채팅앱에서 DynamoDB Talkers 테이블에 사용자가 입력하는 내용을 추가하는 POST 메소드를 설정하고 있습니다. GET 메소드에서 한 것 처럼 POST에 대해서도 똑 같이 설정하면 됩니다. 그런데, POST 메소드에서는 데이터베이스에 값을 저장하기 때문에 다른 Lambda 함수를 사용하는 것입니다. 대신 데이터를 가져오는 것은 "GetTalkersToDynamoDB" 함수를 사용하고 있습니다.
 
 13\. 이제 /zombie/talkers/OPTIONS 메소드로 갑니다.
 
@@ -296,14 +296,14 @@ Area Code는 미국 지역번호로 적절한 값을 입력하도록 합니다.
 
 18\. 응답 상태 코드 "200"으로 새로운 Integration response를 추가합니다. "Method response status" 드롭다운을 클릭하고, "200"을 선택합니다. (regex 박스는 공란으로 둡니다.) 완료 되면 푸른색 **Save** 버튼을 누립니다.
 
-* 이 부분에서는 OPTIONS 메소드에 대해 200 응답을 받을 수 있도록 간간히 설정했습니다. OPTIONS 메소드는 클라이언트가 API 리소스 및 각 메소드에 대한 상세 데이터를 가져가는데 사용됩니다. 클라이언트가 API에 대해 어떤 것을 사용 가능한지 얻어갈 수 있는 정보를 주는 메카니즘이라고 생각하시면 됩니다.
+* 이 부분에서는 OPTIONS 메소드에 대해 200 응답을 받을 수 있도록 간단히 설정했습니다. OPTIONS 메소드는 클라이언트가 API 리소스 및 각 메소드에 대한 상세 데이터를 가져가는데 사용됩니다. 클라이언트가 API에 대해 어떤 것을 사용 가능한지 얻어갈 수 있는 정보를 주는 메카니즘이라고 생각하시면 됩니다.
 
 19\. 이제 왼쪽 메뉴의 /zombie/talkers 리소스를 선택합니다.
 ![talker resource](/Images/Typing-Step19.png)
 
 20\. "Actions" 박스를 클릭하고, 드롭다운에서 "Enable CORS"를 선택합니다.
 
-21\. **Enable CORS and replace ...** 버튼을 누른 후, 다음 창에서 **Yes, replace existing value**를 눌러 기존의 설정을 변경합니다. 아래와 같이 CORS 옵션에 모든 체크 부분에 녹색으로 보여야 합니다.
+21\. **Enable CORS and replace ...** 을 선택한 후, 다음 창에서 **Yes, replace existing value**를 눌러 기존의 설정을 변경합니다. 아래와 같이 CORS 옵션에 모든 체크 부분에 녹색으로 보여야 합니다.
 ![talker resource](/Images/Typing-Step21.png)
 
 * 만약, 모든 체크 마크가 녹색이 아니면 위에서 진행한 HTTP 상태 코드 200을 추가하는 과정에서 뭔가 누락된 것입니다. 위의 단계를 다시 확인하셔서 POST, GET, OPTIONS 메소드의 200 상태 코드를 추가하세요.
